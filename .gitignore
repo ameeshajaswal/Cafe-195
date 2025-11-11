@@ -7,20 +7,38 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+client/dist/
+server/dist/
+
+# Lock files
 package-lock.json
+client/package-lock.json
+server/package-lock.json
+
+# Local environment files
 *.local
 server/.env
 
-# Editor directories and files
+# OS files
+.DS_Store
+
+# IDE / Editor settings
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Misc
+.env
