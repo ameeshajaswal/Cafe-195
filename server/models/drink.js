@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 
 const drinkSchema = new mongoose.Schema(
   {
+    drinkID: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     name: {
       type: String,
       required: true,
