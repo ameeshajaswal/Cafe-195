@@ -2,10 +2,10 @@ import Drink from "../models/drink.js";
 
 // Create new drink
 export const createDrink = async (req, res) => {
-  const { name, price, orderId } = req.body;
+  const { drinkID, name, price, orderId } = req.body;
 
   try {
-    const drink = await Drink.create({ name, price, orderId });
+    const drink = await Drink.create({ drinkID, name, price, orderId });
 
     res.status(201).json(drink);
   } catch (error) {
@@ -43,9 +43,10 @@ export const updateDrink = async (req, res) => {
 
     if (!drink) return res.status(404).json({ message: "Drink not found" });
 
-    drink.name = req.body.name || drink.name;
-    drink.price = req.body.price || drink.price;
-    drink.orderId = req.body.orderId || drink.orderId;
+    drink.drinkID = req.body.drinkID ?? drink.drinkID;
+    drink.name = req.body.name ?? drink.name;
+    drink.price = req.body.price ?? drink.price;
+    drink.orderId = req.body.orderId ?? drink.orderId;
 
     const updatedDrink = await drink.save();
     res.json(updatedDrink);
