@@ -139,6 +139,8 @@ header h1{
 }
 
 
+
+
 /*DRINK PAGE FROM HERE ON*/
 
 #drinkPage{
@@ -180,6 +182,12 @@ header h1{
     align-items: center;
     background-color: rgba(155, 156, 135, 0.81);
     border-radius: 15px;
+    transition: 0.3s;
+    
+}
+
+.drinksItem:hover{
+    background-color: rgba(155, 156, 135, 0.90);
 }
 
 
@@ -227,6 +235,7 @@ header h1{
     width: 30%;
     transition: 0.2s;
     font-weight: 600;
+    overflow-x: visible;
 }
 
 
@@ -257,3 +266,7 @@ header h1{
 }
 
 
+.orderingSection button:active{
+    transform: scale(0.90); 
+    background-color: #87949d; 
+}
