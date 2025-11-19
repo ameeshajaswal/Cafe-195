@@ -1,15 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
 *{
     padding: 0;
     margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+video{
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    flex-wrap: wrap;
+    overflow: hidden;
+    z-index: 1;
+
 }
 
 header{
+
     width: 100%;
     height: 100vh;
-    background-image: url('../public/landingPageFrame.jpg');
-    background-size: cover;
-    background-position: center;
+    
+
 }
+
+
 
 nav{
     margin-left: auto;
@@ -22,15 +39,20 @@ nav{
     height: 36px;
 }
 
+nav, #userInformationSectionLandingPage{
+    position: relative;
+    z-index: 2;
+}
+
 a{
     font-size: 20px;
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
     transition: 0.2s;
 }
 
 a:hover{
-    color: white;
+    color: rgb(126, 124, 124);
 }
 
 #userInformationSectionLandingPage{
@@ -40,7 +62,7 @@ a:hover{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    right: 30px;
+    right: 40px;
     position: absolute;
     top: 25px;
     text-decoration: none;
@@ -58,18 +80,58 @@ a:hover{
     margin-top: 75px;
 }
 
-#landPageMainDisplay img{
+
+header h1{
+    color: white;
+    font-weight: 500;
+    font-size: 100px;
+    
+}
+
+#designLineLandingPage{
+    width: 40vw;
+    max-width: 350px;
+    height: 12px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -10px;
+
+}
+
+#landPageMainDisplay h1, #landPageMainDisplay div, #landPageMainDisplay p, #startOrderingBtn{
+    z-index: 20;
+}
+
+#introductionContainer{   /*This moves the introduction section up down left right*/
     position: absolute;
+    top: 50%;
     left: 50%;
-    height: 524px;
-    width: auto;
+    transform: translate(-50%,-40%); 
 }
 
-#landingPageCoffeePicBack{
-    transform: translateX(-35%) rotate(23deg);
+#introductionContainer p{
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    color: white;
 }
 
-#landingPageCoffeePicFront{
-    top: 110px;
-    transform: scaleX(-1) translateX(70%) rotate(34deg);
+#introductionContainer button{
+    width: 200px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: #b3b49c;
+    color: black;
+    font-size: 18px;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+
+#introductionContainer button:hover{
+    background-color: #9b9c87;
+    font-size: 19px;
 }
