@@ -237,6 +237,8 @@ header h1{
 .orderingSection button:first-child:hover{
     background-color: #9b9c87;
     border-radius: 15px;
+    color: white;
+    cursor: pointer;
 }
 
 .orderingSection button:nth-child(2){
@@ -246,6 +248,8 @@ header h1{
 .orderingSection button:nth-child(2):hover{
     background-color: #9b9c87;
     border-radius: 15px;
+    color: white;
+    cursor: pointer;
 }
 
 .orderingSection button:nth-child(3){
