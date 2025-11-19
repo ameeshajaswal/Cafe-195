@@ -18,7 +18,7 @@ function LandingPage(){
                     <a href="">CART</a>
                     <a href="">SIGN UP</a>
                     <a href="">LOGIN</a>
-                </div>
+            </div>
             <div id="landPageMainDisplay">
                 <div id="introductionContainer">
                     <h1>195°F</h1>
