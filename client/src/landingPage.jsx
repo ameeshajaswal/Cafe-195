@@ -8,14 +8,14 @@ function LandingPage(){
                 <source src="../public/landingPageVideo.mp4" type="video/mp4" />
             </video>
             <nav>
-                <a href="">HOME</a>
-                <a href="">DRINKS</a>
-                <a href="">FOODS</a>
-                <a href="">ABOUT</a>
+                <a href="#header">HOME</a>
+                <a href="#drinkPage">DRINKS</a>
+                <a href="#foodPage">FOODS</a>
+                <a href="">CART</a>
                 <a href="">CONTACT</a>
             </nav>
             <div id="userInformationSectionLandingPage">
-                    <a href="">CART</a>
+                    
                     <a href="">SIGN UP</a>
                     <a href="">LOGIN</a>
             </div>
