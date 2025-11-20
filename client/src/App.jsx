@@ -5,7 +5,7 @@ import './App.css'
 import LandingPage from './landingPage'
 import DrinkPage from './drinkPage'
 import FoodPage from './foodPage'
-
+import Cart from './cart'
 
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
       <LandingPage/>
       <DrinkPage/>
       <FoodPage/>
+      <Cart/>
     </>
   )
 }
