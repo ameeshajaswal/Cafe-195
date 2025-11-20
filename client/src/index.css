@@ -269,9 +269,11 @@ header h1{
 }
 
 
-.orderingSection button:active{
+.orderingSection button:hover{
     transform: scale(0.90); 
-    background-color: #87949d; 
+    background-color: #9b9c87;
+    border-radius: 15px 10px 10px;
+    color: white;
 }
 
 
@@ -294,9 +296,11 @@ header h1{
 #cartPage{
     width: 99vw;
     height: 100vh;
-    background-image: url(../public/thridPagePicture.jpg);
+    background-image: url('../public/coffeeShopImg.jpg');
     background-size: cover;
     background-position: bottom;
     background-attachment: fixed;
 
 }
+
+

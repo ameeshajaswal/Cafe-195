@@ -1,5 +1,12 @@
 {
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node express.js",
+    "client": "npm run dev --prefix client"
+  },
   "dependencies": {
+    "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "express": "^5.1.0"
   }

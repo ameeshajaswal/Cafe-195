@@ -6,43 +6,119 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let cart = {
+// DRINK CART
+let drinkCart = {
   icedLatte: 0,
   icedChocolate: 0,
   icedCappuccino: 0,
   strawberrySmoothie: 0
 };
 
-// GET all cart values
-app.get("/api/cart", (req, res) => {
-  res.json(cart);
+// FOOD CART
+let foodCart = {
+  croissant: 0,
+  clubSandwich: 0,
+  spaghetti: 0,
+  kuyteav: 0
+};
+
+// ---------------------- RESET CARTS ----------------------
+
+
+app.post("/api/drinkCart/reset", (req, res) => {
+  drinkCart = {
+    icedLatte: 0,
+    icedChocolate: 0,
+    icedCappuccino: 0,
+    strawberrySmoothie: 0
+  };
+  res.json({ message: "Drink cart cleared" });
 });
 
-// UPDATE one drink quantity
-app.post("/api/cart/:drink", (req, res) => {
-  const { drink } = req.params;
+app.post("/api/foodCart/reset", (req, res) => {
+  foodCart = {
+    croissant: 0,
+    clubSandwich: 0,
+    spaghetti: 0,
+    kuyteav: 0
+  };
+  res.json({ message: "Food cart cleared" });
+});
+
+// ---------------------- GET CARTS ----------------------
+
+
+
+
+// GET drink cart
+app.get("/api/drinkCart", (req, res) => {
+  res.json(drinkCart);
+});
+
+// GET food cart
+app.get("/api/foodCart", (req, res) => {
+  res.json(foodCart);
+});
+
+
+
+
+// ---------------------- SET QUANTITY ----------------------
+
+// Update drink quantity
+app.post("/api/drinkCart/:item", (req, res) => {
+  const { item } = req.params;
   const { quantity } = req.body;
 
-  if (!cart.hasOwnProperty(drink)) {
-    return res.status(400).json({ error: "Drink not found" });
+  if (!drinkCart.hasOwnProperty(item)) {
+    return res.status(400).json({ error: "Drink item not found" });
   }
 
-  cart[drink] = quantity;
-  res.json(cart);
+  drinkCart[item] = quantity;
+  res.json(drinkCart);
 });
 
-// OPTIONAL: increment or decrement
-app.post("/api/cart/:drink/:action", (req, res) => {
-  const { drink, action } = req.params;
+// Update food quantity
+app.post("/api/foodCart/:item", (req, res) => {
+  const { item } = req.params;
+  const { quantity } = req.body;
 
-  if (!cart.hasOwnProperty(drink)) {
-    return res.status(400).json({ error: "Drink not found" });
+  if (!foodCart.hasOwnProperty(item)) {
+    return res.status(400).json({ error: "Food item not found" });
   }
 
-  if (action === "add") cart[drink] += 1;
-  if (action === "remove" && cart[drink] > 0) cart[drink] -= 1;
+  foodCart[item] = quantity;
+  res.json(foodCart);
+});
 
-  res.json(cart);
+// ---------------------- ADD / REMOVE ----------------------
+
+// drinks add/remove
+app.post("/api/drinkCart/:item/:action", (req, res) => {
+  const { item, action } = req.params;
+
+  if (!drinkCart.hasOwnProperty(item)) {
+    return res.status(400).json({ error: "Drink item not found" });
+  }
+
+  if (action === "add") drinkCart[item] += 1;
+  if (action === "remove" && drinkCart[item] > 0) drinkCart[item] -= 1;
+
+  res.json(drinkCart);
+});
+
+// food add/remove
+app.post("/api/foodCart/:item/:action", (req, res) => {
+  const { item, action } = req.params;
+
+  if (!foodCart.hasOwnProperty(item)) {
+    return res.status(400).json({ error: "Food item not found" });
+  }
+
+  if (action === "add") foodCart[item] += 1;
+  if (action === "remove" && foodCart[item] > 0) foodCart[item] -= 1;
+
+  res.json(foodCart);
 });
 
 app.listen(5000, () => console.log("API running on port 5000"));
