@@ -12,42 +12,102 @@ function drinkPage(){
     const [icedCappuccinoNum, setIcedCappucinoNum] = useState(0);
     const [strawberrySmoothieNum, setstrawberrySmoothieNum] = useState(0);
 
-    const addIceLatte = () =>{
+    const syncCart = async () => {
+        const res = await fetch("http://localhost:5000/api/drinkCart");
+        const data = await res.json();
+
+        setIcedLatteNum(data.icedLatte);
+        setIcedChocolateNum(data.icedChocolate);
+        setIcedCappucinoNum(data.icedCappuccino);
+        setstrawberrySmoothieNum(data.strawberrySmoothie);
+    };
+
+    
+    const addIceLatte = async () =>{
         setIcedLatteNum(icedLatteNum + 1);
+
+        await fetch("http://localhost:5000/api/drinkCart/icedLatte/add", {
+            method: "POST"
+        });
+
+        syncCart();
     }
 
-    const removeIceLatte = () => {
+    const removeIceLatte = async () => {
         if(icedLatteNum > 0){
             setIcedLatteNum(icedLatteNum - 1);
+
+            await fetch("http://localhost:5000/api/drinkCart/icedLatte/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     }
-    const addIcedChocolate = () => {
+
+    const addIcedChocolate = async () => {
         setIcedChocolateNum(icedChocolateNum + 1);
+
+        await fetch("http://localhost:5000/api/drinkCart/icedChocolate/add", {
+            method: "POST"
+        });
+
+        syncCart();
     }
 
-    const removeIcedChocolate = () => {
+    const removeIcedChocolate = async () => {
         if (icedChocolateNum > 0) {
             setIcedChocolateNum(icedChocolateNum - 1);
+
+            await fetch("http://localhost:5000/api/drinkCart/icedChocolate/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     }
 
-    const addIcedCappuccino = () => {
+    const addIcedCappuccino = async () => {
         setIcedCappucinoNum(icedCappuccinoNum + 1);
+
+        await fetch("http://localhost:5000/api/drinkCart/icedCappuccino/add", {
+            method: "POST"
+        });
+
+        syncCart();
     }
 
-    const removeIcedCappuccino = () => {
+    const removeIcedCappuccino = async () => {
         if (icedCappuccinoNum > 0) {
             setIcedCappucinoNum(icedCappuccinoNum - 1);
+
+            await fetch("http://localhost:5000/api/drinkCart/icedCappuccino/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     }
 
-    const addStrawberrySmoothie = () => {
+    const addStrawberrySmoothie = async () => {
         setstrawberrySmoothieNum(strawberrySmoothieNum + 1);
+
+        await fetch("http://localhost:5000/api/drinkCart/strawberrySmoothie/add", {
+            method: "POST"
+        });
+
+        syncCart();
     }
 
-    const removeStrawberrySmoothie = () => {
+    const removeStrawberrySmoothie = async () => {
         if (strawberrySmoothieNum > 0) {
             setstrawberrySmoothieNum(strawberrySmoothieNum - 1);
+
+            await fetch("http://localhost:5000/api/drinkCart/strawberrySmoothie/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     }
 

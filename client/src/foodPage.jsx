@@ -8,43 +8,101 @@ function foodPage() {
     const [spaghettiNum, setSpaghettiNum] = useState(0);
     const [kuyteavNum, setKuyteavNum] = useState(0);
 
-    const addCroissant = () => {
-        setCroissantNum(croissantNum + 1);
+    const syncCart = async () => {
+        const res = await fetch("http://localhost:5000/api/foodCart");
+        const data = await res.json();
+
+        setCroissantNum(data.croissant);
+        setClubSandwichNum(data.clubSandwich);
+        setSpaghettiNum(data.spaghetti);
+        setKuyteavNum(data.kuyteav);
     };
 
-    const removeCroissant = () => {
+    const addCroissant = async () => {
+        setCroissantNum(croissantNum + 1);
+
+        await fetch("http://localhost:5000/api/foodCart/croissant/add", {
+            method: "POST"
+        });
+
+        syncCart();
+    };
+
+    const removeCroissant = async () => {
         if (croissantNum > 0) {
             setCroissantNum(croissantNum - 1);
+
+            await fetch("http://localhost:5000/api/foodCart/croissant/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     };
 
-    const addClubSandwich = () => {
+    const addClubSandwich = async () => {
         setClubSandwichNum(clubSandwichNum + 1);
+
+        await fetch("http://localhost:5000/api/foodCart/clubSandwich/add", {
+            method: "POST"
+        });
+
+        syncCart();
     };
 
-    const removeClubSandwich = () => {
+    const removeClubSandwich = async () => {
         if (clubSandwichNum > 0) {
             setClubSandwichNum(clubSandwichNum - 1);
+
+            await fetch("http://localhost:5000/api/foodCart/clubSandwich/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     };
 
-    const addSpaghetti = () => {
+    const addSpaghetti = async () => {
         setSpaghettiNum(spaghettiNum + 1);
+
+        await fetch("http://localhost:5000/api/foodCart/spaghetti/add", {
+            method: "POST"
+        });
+
+        syncCart();
     };
 
-    const removeSpaghetti = () => {
+    const removeSpaghetti = async () => {
         if (spaghettiNum > 0) {
             setSpaghettiNum(spaghettiNum - 1);
+
+            await fetch("http://localhost:5000/api/foodCart/spaghetti/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     };
 
-    const addKuyteav = () => {
+    const addKuyteav = async () => {
         setKuyteavNum(kuyteavNum + 1);
+
+        await fetch("http://localhost:5000/api/foodCart/kuyteav/add", {
+            method: "POST"
+        });
+
+        syncCart();
     };
 
-    const removeKuyteav = () => {
+    const removeKuyteav = async () => {
         if (kuyteavNum > 0) {
             setKuyteavNum(kuyteavNum - 1);
+
+            await fetch("http://localhost:5000/api/foodCart/kuyteav/remove", {
+                method: "POST"
+            });
+
+            syncCart();
         }
     };
 
