@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
+
+
 function LandingPage(){
+
+    
     
     return(
         <header>
@@ -11,7 +15,7 @@ function LandingPage(){
                 <a href="#header">HOME</a>
                 <a href="#drinkPage">DRINKS</a>
                 <a href="#foodPage">FOODS</a>
-                <a href="">CART</a>
+                <a href="#cartPage">CART</a>
                 <a href="">CONTACT</a>
             </nav>
             <div id="userInformationSectionLandingPage">
