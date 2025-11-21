@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-function Cart(){
-    
+function Cart() {
+
     const [drinkList, setDrinkList] = useState([]);
     const [foodList, setFoodList] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const isAuthed = () => !!localStorage.getItem("token");
+
+    const handleOrderClick = () => {
+        if (!isAuthed()) {
+            alert("Please sign up or log in before placing an order.");
+            window.location.href = "/login.html"; // or swap to /signup.html
+            return;
+        }
+        // TODO: add real order submission when auth is wired
+    };
 
     const nameMapDrink = {
         icedLatte: "Iced Latte",
@@ -77,7 +87,7 @@ function Cart(){
         setTotalPrice(total.toFixed(2));
     }, [drinkList, foodList]);
 
-    return(
+    return (
         <section id="cartPage">
             <div id="checkOutContainer">
                 <h2>CHECK OUT</h2>
@@ -105,9 +115,10 @@ function Cart(){
                     </div>
                     <h4>Total: ${totalPrice}</h4>
                 </div>
-                
-                <button id="checkOutOrderBtn">ORDER</button>
-                
+
+                <button id="checkOutOrderBtn" onClick={handleOrderClick}>ORDER</button>
+
+
             </div>
         </section>
     )

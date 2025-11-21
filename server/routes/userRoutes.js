@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  bootstrapAdmin,
   deleteUser,
   getUserById,
   getUsers,
@@ -14,6 +15,9 @@ const router = express.Router();
 // Auth routes
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+
+// One-time admin bootstrap (no auth; remove in production)
+router.post("/bootstrap-admin", bootstrapAdmin);
 
 // User CRUD (admin only)
 router.get("/", protect, admin, getUsers);

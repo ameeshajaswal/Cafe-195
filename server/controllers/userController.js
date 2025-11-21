@@ -8,12 +8,23 @@ const generateToken = (id) => {
 
 // Register user
 export const registerUser = async (req, res) => {
-  const { UserID, name, email, password } = req.body;
+  const { UserID, username, name, email, password } = req.body;
   try {
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ message: "User already exists" });
+    if (!UserID || !username || !name || !email || !password) {
+      return res.status(400).json({ message: "UserID, username, name, email and password are required" });
+    }
 
-    const user = await User.create({ UserID, name, email, password });
+    const userByEmail = await User.findOne({ email });
+    if (userByEmail) {
+      return res.status(400).json({ message: "User with this email already exists" });
+    }
+
+    const userByUsername = await User.findOne({ username });
+    if (userByUsername) {
+      return res.status(400).json({ message: "User with this username already exists" });
+    }
+
+    const user = await User.create({ UserID, username, name, email, password });
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -52,6 +63,45 @@ export const getUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Exclude passwords
     res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// One-time admin bootstrap (dev helper)
+export const bootstrapAdmin = async (req, res) => {
+  try {
+    // Block if an admin already exists
+    const adminExists = await User.findOne({ role: "admin" });
+    if (adminExists) {
+      return res.status(400).json({ message: "Admin already exists" });
+    }
+
+    const { UserID, username, name, email, password } = req.body;
+
+    if (!UserID || !username || !name || !email || !password) {
+      return res.status(400).json({ message: "UserID, username, name, email and password are required" });
+    }
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const user = await User.create({
+      UserID,
+      name,
+      email,
+      password,
+      role: "admin"
+    });
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

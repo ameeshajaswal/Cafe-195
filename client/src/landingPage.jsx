@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 
 
-function LandingPage(){
+function LandingPage() {
 
-    
-    
-    return(
+
+
+    return (
         <header>
             <video autoPlay muted loop id="backgroundVideo">
                 <source src="../public/landingPageVideo.mp4" type="video/mp4" />
@@ -19,9 +19,9 @@ function LandingPage(){
                 <a href="">CONTACT</a>
             </nav>
             <div id="userInformationSectionLandingPage">
-                    
-                    <a href="">SIGN UP</a>
-                    <a href="">LOGIN</a>
+
+                <a href="/signup.html">SIGN UP</a>
+                <a href="/login.html">LOGIN</a>
             </div>
             <div id="landPageMainDisplay">
                 <div id="introductionContainer">
@@ -31,7 +31,7 @@ function LandingPage(){
                     <button id="startOrderingBtn">Start Ordering</button>
                 </div>
             </div>
-            
+
         </header>
     )
 }
