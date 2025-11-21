@@ -209,8 +209,8 @@ header h1{
 
 .orderingSection{
 
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 1px;
     height: 10%;
     width: 70%;
     min-width: 200px;
@@ -294,6 +294,7 @@ header h1{
 /*Cart Page CSS from Here On*/
 
 #cartPage{
+    color: white;
     width: 99vw;
     height: 100vh;
     background-image: url('../public/coffeeShopImg.jpg');
@@ -303,4 +304,94 @@ header h1{
 
 }
 
+#checkOutContainer{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    min-width: 500px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(132, 129, 122, 0.6);
+    width: 35%;
+    height: 80%;
+}
 
+#checkOutContainer h2{
+    opacity: 1;
+    margin-top: 30px;
+    text-align: center;
+    color: white;
+
+}
+
+#checkOutSection{
+    border-radius: 25px;
+    min-width: 400px;
+    background-color: rgba(132, 129, 122, 0.8);
+    opacity: 1;
+    height: 70%;
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#checkOutSection h3{
+    margin-top: 30px;
+}
+
+.cartItem{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: 600;
+    width: 80%;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.cartItem span{
+    flex: 1;
+    text-align: center;
+}
+
+.cartItem span:first-child{
+    text-align: left;
+    flex: 1.5;
+}
+
+.cartItem span:last-child{
+    text-align: right;
+    flex: 1.5;
+}
+
+#checkOutSection h4{
+    margin-top: 15px;
+}
+
+#checkOutOrderBtn{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: #84817A;
+    color: white;
+    font-weight: 900;
+    border: none;
+    width: 120px;
+    height: 40px;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+#checkOutOrderBtn:hover{
+    transform: scale(1.1);
+    color: black;
+}
