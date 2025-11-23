@@ -1,29 +1,36 @@
 import Order from "../models/order.js";
+import Counter from "../models/counter.js";
 
 // Create new order
 export const createOrder = async (req, res) => {
   const {
-    foodID,
-    drinkID,
-    food_name,
-    drink_name,
+    foodItems = [],
+    drinkItems = [],
     total_food_price,
     total_drink_price,
     total_price,
-    orderID,
     UserID
   } = req.body;
 
   try {
+    if (!foodItems.length && !drinkItems.length) {
+      return res.status(400).json({ message: "Order must contain at least one item" });
+    }
+
+    const counter = await Counter.findOneAndUpdate(
+      { _id: "orderNumber" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+    const nextOrderNumber = counter.seq;
+
     const order = await Order.create({
-      foodID,
-      drinkID,
-      food_name,
-      drink_name,
+      foodItems,
+      drinkItems,
       total_food_price,
       total_drink_price,
       total_price,
-      orderID,
+      orderNumber: nextOrderNumber,
       UserID
     });
 
@@ -63,15 +70,12 @@ export const updateOrder = async (req, res) => {
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    order.food_name = req.body.food_name ?? order.food_name;
-    order.drink_name = req.body.drink_name ?? order.drink_name;
-    order.foodID = req.body.foodID ?? order.foodID;
-    order.drinkID = req.body.drinkID ?? order.drinkID;
+    order.foodItems = req.body.foodItems ?? order.foodItems;
+    order.drinkItems = req.body.drinkItems ?? order.drinkItems;
     order.total_food_price = req.body.total_food_price ?? order.total_food_price;
     order.total_drink_price =
       req.body.total_drink_price ?? order.total_drink_price;
     order.total_price = req.body.total_price ?? order.total_price;
-    order.orderID = req.body.orderID ?? order.orderID;
     order.UserID = req.body.UserID ?? order.UserID;
 
     const updatedOrder = await order.save();

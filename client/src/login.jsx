@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiFetch } from "./api";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-    setSuccess("");
     setIsSubmitting(true);
 
     try {
@@ -29,10 +29,11 @@ function Login() {
         role: data.role
       }));
 
-      setSuccess("Logged in successfully.");
-      setEmail("");
-      setPassword("");
-      console.log("Login success response:", data);
+      // Redirect back to landing page so navbar/auth UI update immediately
+      navigate("/", {
+        replace: true,
+        state: { loginSuccess: true, message: `Welcome back ${data.name}` },
+      });
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {
@@ -44,7 +45,6 @@ function Login() {
     <main>
       <h1>Log In</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Email Address
