@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -20,8 +21,8 @@ function LandingPage() {
             </nav>
             <div id="userInformationSectionLandingPage">
 
-                <a href="/signup.html">SIGN UP</a>
-                <a href="/login.html">LOGIN</a>
+                <Link to="/signup">SIGN UP</Link>
+                <Link to="/login">LOGIN</Link>
             </div>
             <div id="landPageMainDisplay">
                 <div id="introductionContainer">

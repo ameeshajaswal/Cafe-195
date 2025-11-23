@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import LandingPage from './landingPage'
 import DrinkPage from './drinkPage'
 import FoodPage from './foodPage'
 import Cart from './cart'
+import Login from './login'
+import Signup from './signup'
 
 function App() {
 
@@ -34,12 +37,21 @@ function App() {
   }, []);
 
   return (
-    <>
-      <LandingPage/>
-      <DrinkPage/>
-      <FoodPage/>
-      <Cart/>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <LandingPage />
+            <DrinkPage />
+            <FoodPage />
+            <Cart />
+          </>
+        }
+      />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
   )
 }
 

@@ -25,7 +25,6 @@ server/package-lock.json
 
 # Local environment files
 *.local
-server/.env
 
 # OS files
 .DS_Store
@@ -41,4 +40,3 @@ server/.env
 *.sw?
 
 # Misc
-.env
