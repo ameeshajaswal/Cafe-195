@@ -8,6 +8,13 @@ export async function apiFetch(path, options = {}) {
         "Content-Type": "application/json",
     };
 
+    if (typeof window !== "undefined") {
+        const token = window.localStorage.getItem("authToken");
+        if (token) {
+            defaultHeaders["Authorization"] = `Bearer ${token}`;
+        }
+    }
+
     const mergedOptions = {
         ...options,
         headers: {

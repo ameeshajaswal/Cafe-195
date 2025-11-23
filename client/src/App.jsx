@@ -24,7 +24,7 @@ function App() {
   }, []);
 
 
-    useEffect(() => {
+  useEffect(() => {
     const handleUnload = () => {
       navigator.sendBeacon("http://localhost:5000/api/foodCart/reset");
     };

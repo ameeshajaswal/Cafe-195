@@ -1,26 +1,24 @@
 import mongoose from "mongoose";
 
+const lineItemSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    unitPrice: { type: Number, required: true },
+    subtotal: { type: Number, required: true }
+  },
+  { _id: false }
+);
+
 const orderSchema = new mongoose.Schema(
   {
-    foodID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Food",
-      required: true
+    drinkItems: {
+      type: [lineItemSchema],
+      default: []
     },
-    drinkID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Drink",
-      required: true
-    },
-    food_name: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Food",
-      required: false
-    },
-    drink_name: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Drink",
-      required: false
+    foodItems: {
+      type: [lineItemSchema],
+      default: []
     },
     total_food_price: {
       type: Number,
@@ -34,11 +32,10 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    orderID: {
-      type: String,
+    orderNumber: {
+      type: Number,
       required: true,
-      unique: true,
-      trim: true
+      unique: true
     },
     UserID: {
       type: mongoose.Schema.Types.ObjectId,

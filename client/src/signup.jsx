@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiFetch } from "./api";
 
 function Signup() {
@@ -8,13 +9,12 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-    setSuccess("");
     setIsSubmitting(true);
 
     if (password !== confirmPassword) {
@@ -23,26 +23,24 @@ function Signup() {
       return;
     }
 
-    const UserID = Date.now().toString(); // simple placeholder
     const name = fullName.trim();
 
     try {
       const data = await apiFetch("/api/users/register", {
         method: "POST",
         body: JSON.stringify({
-          UserID,
           name,
           email,
           password,
         }),
       });
 
-      setSuccess("Account created! You can now log in.");
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      console.log("Signup success response:", data);
+      // After successful signup, redirect back to landing page
+      // and pass a small success message via location state so
+      // the landing page can inform the user they may now log in.
+      navigate("/", {
+        state: { signupSuccess: true, message: "Account created! You can now log in." },
+      });
     } catch (err) {
       setError(err.message || "Signup failed");
     } finally {
@@ -53,7 +51,6 @@ function Signup() {
     <main>
       <h1>Create Your Account</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Full Name

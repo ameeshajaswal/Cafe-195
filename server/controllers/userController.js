@@ -8,10 +8,10 @@ const generateToken = (id) => {
 
 // Register user
 export const registerUser = async (req, res) => {
-  const { UserID, name, email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    if (!UserID || !name || !email || !password) {
-      return res.status(400).json({ message: "UserID, name, email and password are required" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email and password are required" });
     }
 
     const userByEmail = await User.findOne({ email });
@@ -19,7 +19,7 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "User with this email already exists" });
     }
 
-    const user = await User.create({ UserID, name, email, password });
+    const user = await User.create({ name, email, password });
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -72,10 +72,10 @@ export const bootstrapAdmin = async (req, res) => {
       return res.status(400).json({ message: "Admin already exists" });
     }
 
-    const { UserID, name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!UserID || !name || !email || !password) {
-      return res.status(400).json({ message: "UserID, name, email and password are required" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email and password are required" });
     }
 
     const userExists = await User.findOne({ email });
@@ -84,7 +84,6 @@ export const bootstrapAdmin = async (req, res) => {
     }
 
     const user = await User.create({
-      UserID,
       name,
       email,
       password,
