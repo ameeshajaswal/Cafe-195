@@ -7,6 +7,8 @@ import FoodPage from './foodPage'
 import Cart from './cart'
 import Login from './login'
 import Signup from './signup'
+import Admin from './Admin'
+import Customer from './Customer'
 
 function App() {
 
@@ -51,6 +53,8 @@ function App() {
       />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/customer" element={<Customer />} />
     </Routes>
   )
 }

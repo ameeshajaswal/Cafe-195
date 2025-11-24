@@ -53,6 +53,61 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// Get current user profile
+export const getMe = async (req, res) => {
+  res.json({
+    _id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+    role: req.user.role
+  });
+};
+
+// Update current user
+export const updateMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // prevent duplicate emails
+    if (req.body.email && req.body.email !== user.email) {
+      const existing = await User.findOne({ email: req.body.email });
+      if (existing) {
+        return res.status(400).json({ message: "Email already in use" });
+      }
+    }
+
+    user.name = req.body.name ?? user.name;
+    user.email = req.body.email ?? user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete current user
+export const deleteMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await user.deleteOne();
+    res.json({ message: "Account deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Get all users
 export const getUsers = async (req, res) => {
   try {

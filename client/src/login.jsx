@@ -29,8 +29,9 @@ function Login() {
         role: data.role
       }));
 
-      // Redirect back to landing page so navbar/auth UI update immediately
-      navigate("/", {
+      // Send admins to the dashboard, customers to their profile
+      const redirectPath = data.role === "admin" ? "/admin" : "/customer";
+      navigate(redirectPath, {
         replace: true,
         state: { loginSuccess: true, message: `Welcome back ${data.name}` },
       });

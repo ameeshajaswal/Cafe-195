@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function LandingPage() {
     const location = useLocation();
-    const navigate = useNavigate();
     const [banner, setBanner] = useState(null);
-    const [authUser, setAuthUser] = useState(null);
 
     useEffect(() => {
         const state = location?.state;
@@ -23,19 +22,21 @@ function LandingPage() {
         return () => clearTimeout(t);
     }, [location]);
 
-    // read auth user from localStorage so nav can reflect login state
     useEffect(() => {
-        const raw = localStorage.getItem("authUser");
-        setAuthUser(raw ? JSON.parse(raw) : null);
-    }, [location]);
+        const target =
+            location.state?.scrollTo ||
+            (location.hash ? location.hash.replace("#", "") : null);
+        if (!target) return;
 
-    function handleSignOut() {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("authUser");
-        setAuthUser(null);
-        // stay on landing page but ensure URL and state are clean
-        navigate("/", { replace: true });
-    }
+        const t = setTimeout(() => {
+            const el = document.getElementById(target);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+            }
+        }, 50);
+
+        return () => clearTimeout(t);
+    }, [location]);
 
     return (
         <header>
@@ -47,26 +48,7 @@ function LandingPage() {
             <video autoPlay muted loop id="backgroundVideo">
                 <source src="../public/landingPageVideo.mp4" type="video/mp4" />
             </video>
-            <nav>
-                <a href="#header">HOME</a>
-                <a href="#drinkPage">DRINKS</a>
-                <a href="#foodPage">FOODS</a>
-                <a href="#cartPage">CART</a>
-                <a href="">CONTACT</a>
-            </nav>
-            <div id="userInformationSectionLandingPage">
-                {authUser ? (
-                    <>
-                        <a href="#" onClick={(e) => { e.preventDefault(); handleSignOut(); }}>SIGN OUT</a>
-                        <a href="#" style={{ textTransform: 'uppercase' }}>{authUser.name}</a>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/signup">SIGN UP</Link>
-                        <Link to="/login">LOGIN</Link>
-                    </>
-                )}
-            </div>
+            <Navbar />
             <div id="landPageMainDisplay">
                 <div id="introductionContainer">
                     <h1>195°F</h1>

@@ -4,6 +4,9 @@ import {
   deleteOrder,
   getOrderById,
   getOrders,
+  getMyOrders,
+  deleteMyOrder,
+  updateMyOrder,
   updateOrder
 } from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -12,6 +15,11 @@ const router = express.Router();
 
 // Create an order
 router.post("/", protect, createOrder);
+
+// Current user orders
+router.get("/mine", protect, getMyOrders);
+router.put("/mine/:id", protect, updateMyOrder);
+router.delete("/mine/:id", protect, deleteMyOrder);
 
 // Read orders
 router.get("/", protect, getOrders);

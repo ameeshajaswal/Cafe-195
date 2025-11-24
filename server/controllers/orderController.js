@@ -43,7 +43,17 @@ export const createOrder = async (req, res) => {
 // Get all orders
 export const getOrders = async (_req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate("UserID", "name email");
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get orders for the current user
+export const getMyOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ UserID: req.user._id });
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -85,12 +95,53 @@ export const updateOrder = async (req, res) => {
   }
 };
 
+// Update an order (current user)
+export const updateMyOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    if (order.UserID.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to update this order" });
+    }
+
+    order.foodItems = req.body.foodItems ?? order.foodItems;
+    order.drinkItems = req.body.drinkItems ?? order.drinkItems;
+    order.total_food_price = req.body.total_food_price ?? order.total_food_price;
+    order.total_drink_price =
+      req.body.total_drink_price ?? order.total_drink_price;
+    order.total_price = req.body.total_price ?? order.total_price;
+
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Delete an order
 export const deleteOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
 
     if (!order) return res.status(404).json({ message: "Order not found" });
+
+    await order.deleteOne();
+    res.json({ message: "Order deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete an order (current user)
+export const deleteMyOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    if (order.UserID.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to delete this order" });
+    }
 
     await order.deleteOne();
     res.json({ message: "Order deleted successfully" });
