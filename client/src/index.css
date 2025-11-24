@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 
-*{
+* {
     padding: 0;
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -11,18 +11,18 @@
 
 
 
-header{
+header {
 
     width: 99vw;
     height: 100vh;
     overflow: hidden;
     flex-wrap: wrap;
-    
+
 
 }
 
 
-video{
+video {
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -33,7 +33,7 @@ video{
 
 }
 
-nav{
+nav {
     margin-left: auto;
     margin-right: auto;
     padding-top: 25px;
@@ -44,23 +44,43 @@ nav{
     height: 36px;
 }
 
-nav, #userInformationSectionLandingPage{
+nav,
+#userInformationSectionLandingPage {
     position: relative;
     z-index: 2;
 }
 
-a{
+.navbar-admin-wrap {
+    background-color: #f5e8d3;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    padding-bottom: 12px;
+}
+
+.navbar-admin-wrap nav a,
+.navbar-admin-wrap #userInformationSectionLandingPage a {
+    color: #4a3f35;
+}
+
+.navbar-admin-wrap nav a:hover,
+.navbar-admin-wrap #userInformationSectionLandingPage a:hover {
+    color: #6b5c4b;
+}
+
+a {
     font-size: 20px;
     text-decoration: none;
     color: rgb(255, 255, 255);
     transition: 0.2s;
 }
 
-a:hover{
+a:hover {
     color: rgb(126, 124, 124);
 }
 
-#userInformationSectionLandingPage{
+#userInformationSectionLandingPage {
     height: 36px;
     width: 15vw;
     display: flex;
@@ -70,10 +90,10 @@ a:hover{
     right: 50px;
     position: absolute;
     top: 25px;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
-#landPageMainDisplay{
+#landPageMainDisplay {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -84,14 +104,14 @@ a:hover{
 }
 
 
-header h1{
+header h1 {
     color: white;
     font-weight: 500;
     font-size: 100px;
-    
+
 }
 
-#designLineLandingPage{
+#designLineLandingPage {
     width: 40vw;
     max-width: 350px;
     height: 12px;
@@ -102,25 +122,29 @@ header h1{
 
 }
 
-#landPageMainDisplay h1, #landPageMainDisplay div, #landPageMainDisplay p, #startOrderingBtn{
+#landPageMainDisplay h1,
+#landPageMainDisplay div,
+#landPageMainDisplay p,
+#startOrderingBtn {
     z-index: 20;
 }
 
-#introductionContainer{   /*This moves the introduction section up down left right*/
+#introductionContainer {
+    /*This moves the introduction section up down left right*/
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-40%); 
+    transform: translate(-50%, -40%);
 }
 
-#introductionContainer p{
+#introductionContainer p {
     padding-top: 5px;
     padding-bottom: 10px;
     font-weight: 600;
     color: white;
 }
 
-#introductionContainer button{
+#introductionContainer button {
     width: 200px;
     height: 60px;
     border-radius: 15px;
@@ -134,7 +158,7 @@ header h1{
     transition: 0.2s;
 }
 
-#introductionContainer button:hover{
+#introductionContainer button:hover {
     background-color: #9b9c87;
     font-size: 19px;
 }
@@ -144,7 +168,8 @@ header h1{
 
 /*DRINK PAGE FROM HERE ON*/
 
-#drinkPage, #foodPage{
+#drinkPage,
+#foodPage {
     width: 99vw;
     height: 100vh;
     background-image: url('../public/coffeeShopImg.jpg');
@@ -158,24 +183,26 @@ header h1{
 
 }
 
-#drinkPage h2, #foodPage h2{
-    
+#drinkPage h2,
+#foodPage h2 {
+
     font-size: 50px;
     color: white;
-    
+
 }
 
-#drinksMenu, #foodMenu{
+#drinksMenu,
+#foodMenu {
     display: flex;
     justify-content: space-evenly;
     width: 90%;
     height: 70vh;
-    
-  
+
+
 }
 
 
-.drinksItem{
+.drinksItem {
     width: 23%;
     height: 100%;
     display: flex;
@@ -185,29 +212,29 @@ header h1{
     border-radius: 15px;
     transition: 0.2s;
     overflow: hidden;
-    
+
 }
 
-.drinksItem:hover{
+.drinksItem:hover {
     background-color: rgba(155, 156, 135, 0.90);
 }
 
 
-.drinksItem img{
+.drinksItem img {
     height: 50%;
     width: auto;
     margin-top: 40px;
     margin-bottom: 10px;
     border-radius: 15px;
-    
+
 }
 
-.drinksItem h3{
+.drinksItem h3 {
     color: white;
 }
 
 
-.orderingSection{
+.orderingSection {
 
     margin-top: 5px;
     margin-bottom: 1px;
@@ -218,11 +245,11 @@ header h1{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    
+
 }
 
-.drinksItem p{
-    
+.drinksItem p {
+
     width: 70%;
     font-size: 13px;
     color: white;
@@ -231,7 +258,7 @@ header h1{
 
 /*Button Design for Food/Drinks */
 
-.orderingSection button{
+.orderingSection button {
     height: 60%;
     border: none;
     background-color: white;
@@ -242,35 +269,35 @@ header h1{
 }
 
 
-.orderingSection button:first-child{
+.orderingSection button:first-child {
     border-radius: 5px;
 }
 
-.orderingSection button:first-child:hover{
+.orderingSection button:first-child:hover {
     background-color: #9b9c87;
     border-radius: 15px;
     color: white;
     cursor: pointer;
 }
 
-.orderingSection button:nth-child(2){
+.orderingSection button:nth-child(2) {
     border-radius: 5px;
 }
 
-.orderingSection button:nth-child(2):hover{
+.orderingSection button:nth-child(2):hover {
     background-color: #9b9c87;
     border-radius: 15px;
     color: white;
     cursor: pointer;
 }
 
-.orderingSection button:nth-child(3){
+.orderingSection button:nth-child(3) {
     width: 35%;
 }
 
 
-.orderingSection button:hover{
-    transform: scale(0.90); 
+.orderingSection button:hover {
+    transform: scale(0.90);
     background-color: #9b9c87;
     border-radius: 15px 10px 10px;
     color: white;
@@ -279,13 +306,13 @@ header h1{
 
 /*FOOD ITEM CSS*/
 
-.foodItemImage{
+.foodItemImage {
     width: 70%;
     transition: 0.2s;
 
 }
 
-.foodItemImage:hover{
+.foodItemImage:hover {
     transform: scale(1.05);
     padding-bottom: 10px;
 }
@@ -293,7 +320,7 @@ header h1{
 
 /*Cart Page CSS from Here On*/
 
-#cartPage{
+#cartPage {
     color: white;
     width: 99vw;
     height: 100vh;
@@ -304,7 +331,7 @@ header h1{
 
 }
 
-#checkOutContainer{
+#checkOutContainer {
     display: flex;
     flex-direction: column;
     border-radius: 20px;
@@ -317,7 +344,7 @@ header h1{
     height: 80%;
 }
 
-#checkOutContainer h2{
+#checkOutContainer h2 {
     opacity: 1;
     margin-top: 30px;
     text-align: center;
@@ -325,7 +352,7 @@ header h1{
 
 }
 
-#checkOutSection{
+#checkOutSection {
     border-radius: 25px;
     min-width: 400px;
     background-color: rgba(132, 129, 122, 0.8);
@@ -339,17 +366,17 @@ header h1{
     text-align: center;
 }
 
-#checkOutSection h3{
+#checkOutSection h3 {
     margin-top: 30px;
 }
 
-.cartItem{
+.cartItem {
     margin-left: auto;
     margin-right: auto;
     font-size: 14px;
     font-weight: 600;
     width: 80%;
-    
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -358,26 +385,26 @@ header h1{
     padding: 5px;
 }
 
-.cartItem span{
+.cartItem span {
     flex: 1;
     text-align: center;
 }
 
-.cartItem span:first-child{
+.cartItem span:first-child {
     text-align: left;
     flex: 1.5;
 }
 
-.cartItem span:last-child{
+.cartItem span:last-child {
     text-align: right;
     flex: 1.5;
 }
 
-#checkOutSection h4{
+#checkOutSection h4 {
     margin-top: 15px;
 }
 
-#checkOutOrderBtn{
+#checkOutOrderBtn {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
@@ -391,7 +418,265 @@ header h1{
     transition: 0.2s;
 }
 
-#checkOutOrderBtn:hover{
+#checkOutOrderBtn:hover {
     transform: scale(1.1);
     color: black;
+}
+
+/* Admin & Customer shared styles */
+.admin-container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f5e8d3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 24px;
+}
+
+.admin-hero {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-card {
+    background-color: #fff9f2;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 500px;
+}
+
+.admin-title {
+    color: #4a3f35;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.admin-subtitle {
+    color: #6b5c4b;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.admin-users-section {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.admin-users-title {
+    color: #4a3f35;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.admin-users-meta {
+    color: #6b5c4b;
+    margin-top: 8px;
+}
+
+.admin-users-error {
+    color: #b00020;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.admin-users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.admin-user-card {
+    background-color: #fff9f2;
+    border: 1px solid rgba(74, 63, 53, 0.12);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.admin-user-name {
+    color: #4a3f35;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.admin-user-email {
+    color: #6b5c4b;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.admin-orders-section {
+    margin-top: 8px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.admin-orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.admin-order-card {
+    background-color: #fff9f2;
+    border: 1px solid rgba(74, 63, 53, 0.12);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.admin-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.admin-order-customer {
+    color: #4a3f35;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.admin-order-number {
+    color: #4a3f35;
+    font-weight: 700;
+}
+
+.admin-order-total {
+    color: #4a3f35;
+    font-weight: 700;
+}
+
+.admin-order-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-order-label {
+    color: #4a3f35;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.admin-order-items {
+    color: #6b5c4b;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.admin-card-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 500px;
+    margin-top: 12px;
+}
+
+.customer-label {
+    display: flex;
+    flex-direction: column;
+    color: #4a3f35;
+    font-weight: 600;
+    gap: 6px;
+}
+
+.customer-input {
+    padding: 10px 12px;
+    border: 1px solid rgba(74, 63, 53, 0.2);
+    border-radius: 10px;
+    background-color: #fff9f2;
+    color: #4a3f35;
+    font-size: 14px;
+}
+
+.customer-input:focus {
+    outline: 2px solid rgba(74, 63, 53, 0.2);
+}
+
+.customer-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.customer-button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.customer-button.primary {
+    background-color: #4a3f35;
+    color: #fff9f2;
+}
+
+.customer-button.danger {
+    background-color: #b00020;
+    color: white;
+}
+
+.customer-order-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.customer-order-edit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.customer-order-edit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.customer-qty-input {
+    width: 80px;
+}
+
+.admin-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 20px;
+}
+
+.admin-modal-content {
+    background: #fff9f2;
+    border-radius: 14px;
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
