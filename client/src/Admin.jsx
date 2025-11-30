@@ -166,131 +166,182 @@ function Admin() {
     return (
         <>
             <Navbar />
-            <div className="admin-container">
-                <div className="admin-hero">
-                    <div className="admin-card">
-                        <h1 className="admin-title">Admin Dashboard</h1>
-                        <p className="admin-subtitle">
-                            Manage users, orders, and products.
-                        </p>
+            <div className="admin-container admin-dashboard">
+                <div className="admin-hero-shell">
+                    <div className="admin-hero glass-panel">
+                        <div className="admin-hero-header">
+                            <span className="admin-kicker">Cafe 195°F</span>
+                            <h1 className="admin-title">Admin Dashboard</h1>
+                            <p className="admin-subtitle">
+                                Warm, glassy controls to keep guests, orders, and products in perfect flow.
+                            </p>
+                        </div>
+                        <div className="admin-hero-divider" />
+                        <div className="admin-hero-metrics">
+                            <div className="admin-chip glass-card fade-in">
+                                <p className="chip-label">Active users</p>
+                                <p className="chip-value">{users.length}</p>
+                            </div>
+                            <div className="admin-chip glass-card fade-in">
+                                <p className="chip-label">Open orders</p>
+                                <p className="chip-value">{orders.length}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="admin-users-section">
-                    <h2 className="admin-users-title">Users</h2>
-                    {isLoading && <p className="admin-users-meta">Loading users...</p>}
-                    {error && <p className="admin-users-error">{error}</p>}
-                    {actionError && <p className="admin-users-error">{actionError}</p>}
-                    {!isLoading && !error && (
-                        <div className="admin-users-grid">
-                            {users.length === 0 ? (
-                                <p className="admin-users-meta">No users to display.</p>
-                            ) : (
-                                users.map((user) => (
-                                    <div key={user._id} className="admin-user-card">
-                                        <p className="admin-user-name">{user.name}</p>
-                                        <p className="admin-user-email">{user.email}</p>
-                                        <div className="admin-card-actions">
-                                            <button className="customer-button primary" onClick={() => startEditUser(user)}>
-                                                Edit
-                                            </button>
-                                            <button className="customer-button danger" onClick={() => handleDeleteUser(user._id)}>
-                                                Remove User
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+                <div className="admin-sections">
+                    <section className="admin-section glass-panel">
+                        <div className="section-header">
+                            <div>
+                                <p className="section-kicker">Guests</p>
+                                <h2 className="section-title">Users</h2>
+                                <p className="section-subtitle">Keep your cafe community tidy with quick edits and removals.</p>
+                            </div>
+                            <div className="section-divider" />
                         </div>
-                    )}
-                </div>
 
-                <div className="admin-orders-section">
-                    <h2 className="admin-users-title">Orders</h2>
-                    {isLoading && <p className="admin-users-meta">Loading orders...</p>}
-                    {error && !orders.length && <p className="admin-users-error">{error}</p>}
-                    {actionError && <p className="admin-users-error">{actionError}</p>}
-                    {!isLoading && !error && (
-                        <div className="admin-orders-grid">
-                            {orders.length === 0 ? (
-                                <p className="admin-users-meta">No orders to display.</p>
-                            ) : (
-                                orders.map((order) => (
-                                    <div key={order._id} className="admin-order-card">
-                                        <div className="admin-order-header">
-                                            <span className="admin-order-number">Order #{order.orderNumber}</span>
-                                            <span className="admin-order-total">
-                                                ${Number(order.total_price || 0).toFixed(2)}
-                                            </span>
-                                        </div>
-                                        <p className="admin-order-customer">
-                                            Customer: {order.UserID?.name || "Unknown"}
-                                        </p>
-                                        <div className="admin-order-body">
-                                            <div>
-                                                <p className="admin-order-label">Drinks</p>
-                                                <p className="admin-order-items">
-                                                    {order.drinkItems && order.drinkItems.length
-                                                        ? order.drinkItems
-                                                            .map((item) => `${item.name} x${item.quantity}`)
-                                                            .join(", ")
-                                                        : "None"}
-                                                </p>
+                        {isLoading && <p className="admin-users-meta">Loading users...</p>}
+                        {error && <p className="admin-users-error">{error}</p>}
+                        {actionError && <p className="admin-users-error">{actionError}</p>}
+                        {!isLoading && !error && (
+                            <div className="admin-grid">
+                                {users.length === 0 ? (
+                                    <p className="admin-users-meta">No users to display.</p>
+                                ) : (
+                                    users.map((user, idx) => (
+                                        <article
+                                            key={user._id}
+                                            className="admin-card glass-card fade-in"
+                                            style={{ animationDelay: `${idx * 0.05}s` }}
+                                        >
+                                            <div className="admin-card-top">
+                                                <div className="admin-avatar">{(user.name || "U")[0]}</div>
+                                                <div>
+                                                    <p className="admin-user-name">{user.name}</p>
+                                                    <p className="admin-user-role">{user.role}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p className="admin-order-label">Foods</p>
-                                                <p className="admin-order-items">
-                                                    {order.foodItems && order.foodItems.length
-                                                        ? order.foodItems
-                                                            .map((item) => `${item.name} x${item.quantity}`)
-                                                            .join(", ")
-                                                        : "None"}
-                                                </p>
+                                            <p className="admin-user-email">{user.email}</p>
+                                            <div className="admin-card-actions">
+                                                <button className="admin-btn primary" onClick={() => startEditUser(user)}>
+                                                    Edit
+                                                </button>
+                                                <button className="admin-btn danger" onClick={() => handleDeleteUser(user._id)}>
+                                                    Remove
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div className="admin-card-actions">
-                                            <button className="customer-button primary" onClick={() => startEditOrder(order)}>
-                                                Edit
-                                            </button>
-                                            <button className="customer-button danger" onClick={() => handleDeleteOrder(order._id)}>
-                                                Cancel Order
-                                            </button>
-                                        </div>
-                                    </div>
+                                        </article>
                                     ))
                                 )}
+                            </div>
+                        )}
+                    </section>
+
+                    <section className="admin-section glass-panel">
+                        <div className="section-header">
+                            <div>
+                                <p className="section-kicker">Service flow</p>
+                                <h2 className="section-title">Orders</h2>
+                                <p className="section-subtitle">Review, fine-tune, or cancel orders with a single tap.</p>
+                            </div>
+                            <div className="section-divider" />
                         </div>
-                    )}
+
+                        {isLoading && <p className="admin-users-meta">Loading orders...</p>}
+                        {error && !orders.length && <p className="admin-users-error">{error}</p>}
+                        {actionError && <p className="admin-users-error">{actionError}</p>}
+                        {!isLoading && !error && (
+                            <div className="admin-grid orders-grid">
+                                {orders.length === 0 ? (
+                                    <p className="admin-users-meta">No orders to display.</p>
+                                ) : (
+                                    orders.map((order, idx) => (
+                                        <article
+                                            key={order._id}
+                                            className="admin-card glass-card fade-in"
+                                            style={{ animationDelay: `${idx * 0.05}s` }}
+                                        >
+                                            <div className="admin-order-header">
+                                                <div className="admin-order-tag">
+                                                    <span>Order</span>
+                                                    <strong>#{order.orderNumber}</strong>
+                                                </div>
+                                                <span className="admin-order-total">
+                                                    ${Number(order.total_price || 0).toFixed(2)}
+                                                </span>
+                                            </div>
+                                            <p className="admin-order-customer">
+                                                Customer: {order.UserID?.name || "Unknown"}
+                                            </p>
+                                            <div className="admin-order-body">
+                                                <div>
+                                                    <p className="admin-order-label">Drinks</p>
+                                                    <p className="admin-order-items">
+                                                        {order.drinkItems && order.drinkItems.length
+                                                            ? order.drinkItems
+                                                                .map((item) => `${item.name} x${item.quantity}`)
+                                                                .join(", ")
+                                                            : "None"}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="admin-order-label">Foods</p>
+                                                    <p className="admin-order-items">
+                                                        {order.foodItems && order.foodItems.length
+                                                            ? order.foodItems
+                                                                .map((item) => `${item.name} x${item.quantity}`)
+                                                                .join(", ")
+                                                            : "None"}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="admin-card-actions">
+                                                <button className="admin-btn primary" onClick={() => startEditOrder(order)}>
+                                                    Edit
+                                                </button>
+                                                <button className="admin-btn danger" onClick={() => handleDeleteOrder(order._id)}>
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </article>
+                                    ))
+                                )}
+                            </div>
+                        )}
+                    </section>
                 </div>
             </div>
 
-            {/* User edit modal */}
             {editingUser && (
                 <div className="admin-modal">
-                    <div className="admin-modal-content">
-                        <h3 className="admin-users-title">Edit User</h3>
-                        <label className="customer-label">
-                            Name
+                    <div className="admin-modal-content glass-panel">
+                        <div className="admin-modal-header">
+                            <p className="section-kicker">Guests</p>
+                            <h3 className="admin-users-title">Edit User</h3>
+                        </div>
+                        <label className="admin-field">
+                            <span>Name</span>
                             <input
-                                className="customer-input"
+                                className="admin-input"
                                 type="text"
                                 value={userForm.name}
                                 onChange={(e) => setUserForm((prev) => ({ ...prev, name: e.target.value }))}
                             />
                         </label>
-                        <label className="customer-label">
-                            Email
+                        <label className="admin-field">
+                            <span>Email</span>
                             <input
-                                className="customer-input"
+                                className="admin-input"
                                 type="email"
                                 value={userForm.email}
                                 onChange={(e) => setUserForm((prev) => ({ ...prev, email: e.target.value }))}
                             />
                         </label>
-                        <label className="customer-label">
-                            Role
+                        <label className="admin-field">
+                            <span>Role</span>
                             <select
-                                className="customer-input"
+                                className="admin-input"
                                 value={userForm.role}
                                 onChange={(e) => setUserForm((prev) => ({ ...prev, role: e.target.value }))}
                             >
@@ -298,11 +349,11 @@ function Admin() {
                                 <option value="admin">admin</option>
                             </select>
                         </label>
-                        <div className="customer-actions">
-                            <button className="customer-button primary" onClick={saveUserEdit} disabled={saving}>
+                        <div className="admin-modal-actions">
+                            <button className="admin-btn primary" onClick={saveUserEdit} disabled={saving}>
                                 {saving ? "Saving..." : "Save"}
                             </button>
-                            <button className="customer-button" onClick={closeUserEdit} disabled={saving}>
+                            <button className="admin-btn ghost" onClick={closeUserEdit} disabled={saving}>
                                 Cancel
                             </button>
                         </div>
@@ -310,12 +361,14 @@ function Admin() {
                 </div>
             )}
 
-            {/* Order edit modal */}
             {editingOrderId && (
                 <div className="admin-modal">
-                    <div className="admin-modal-content">
-                        <h3 className="admin-users-title">Edit Order</h3>
-                        <div className="admin-order-body">
+                    <div className="admin-modal-content glass-panel">
+                        <div className="admin-modal-header">
+                            <p className="section-kicker">Service flow</p>
+                            <h3 className="admin-users-title">Edit Order</h3>
+                        </div>
+                        <div className="admin-order-body admin-edit-body">
                             <div>
                                 <p className="admin-order-label">Drinks</p>
                                 {renderEditItems("drinkItems")}
@@ -325,11 +378,11 @@ function Admin() {
                                 {renderEditItems("foodItems")}
                             </div>
                         </div>
-                        <div className="customer-actions">
-                            <button className="customer-button primary" onClick={() => saveOrderEdit(editingOrderId)} disabled={saving}>
+                        <div className="admin-modal-actions">
+                            <button className="admin-btn primary" onClick={() => saveOrderEdit(editingOrderId)} disabled={saving}>
                                 {saving ? "Saving..." : "Save"}
                             </button>
-                            <button className="customer-button" onClick={cancelEditOrder} disabled={saving}>
+                            <button className="admin-btn ghost" onClick={cancelEditOrder} disabled={saving}>
                                 Cancel
                             </button>
                         </div>

@@ -119,9 +119,9 @@ function drinkPage(){
                     <img src="../public/coffee pic 2.png" alt="" />
                     <h3 id="drinkItemName">Iced Latte</h3> 
                     <div className="orderingSection">
-                        <button id="icedLatteAddBtn" onClick={addIceLatte}>Add</button>
-                        <button id="icedLatteRemoveBtn" onClick={removeIceLatte}>Remove</button>
-                        <button id="icedLatteQuantity">Quantity: {icedLatteNum}</button>
+                        <button className="order-glass add" id="icedLatteAddBtn" onClick={addIceLatte}>Add</button>
+                        <button className="order-glass remove" id="icedLatteRemoveBtn" onClick={removeIceLatte}>Remove</button>
+                        <button className="order-glass quantity" id="icedLatteQuantity">Quantity: {icedLatteNum}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -129,9 +129,9 @@ function drinkPage(){
                     <img src="../public/chocolate drink.png" alt="" /> 
                     <h3 id="drinkItemName">Iced Chocolate</h3> 
                     <div className="orderingSection">
-                        <button id="icedChocolateAddBtn" onClick={addIcedChocolate}>Add</button>
-                        <button id="icedChocolateRemoveBtn" onClick={removeIcedChocolate}>Remove</button>
-                        <button id="icedChocolateQuantity">Quantity: {icedChocolateNum}</button>
+                        <button className="order-glass add" id="icedChocolateAddBtn" onClick={addIcedChocolate}>Add</button>
+                        <button className="order-glass remove" id="icedChocolateRemoveBtn" onClick={removeIcedChocolate}>Remove</button>
+                        <button className="order-glass quantity" id="icedChocolateQuantity">Quantity: {icedChocolateNum}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -139,9 +139,9 @@ function drinkPage(){
                     <img src="../public/icedCappuccino.png" alt="" /> 
                     <h3 id="drinkItemName">Iced Cappuccino</h3> 
                     <div className="orderingSection">
-                        <button id="iceCapuAddBtn" onClick={addIcedCappuccino}>Add</button>
-                        <button id="iceCapuRemoveBtn" onClick={removeIcedCappuccino}>Remove</button>
-                        <button id="iceCapuQuantity">Quantity: {icedCappuccinoNum}</button>
+                        <button className="order-glass add" id="iceCapuAddBtn" onClick={addIcedCappuccino}>Add</button>
+                        <button className="order-glass remove" id="iceCapuRemoveBtn" onClick={removeIcedCappuccino}>Remove</button>
+                        <button className="order-glass quantity" id="iceCapuQuantity">Quantity: {icedCappuccinoNum}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -149,9 +149,9 @@ function drinkPage(){
                     <img src="../public/strawberrySmoothie.png" alt="" />
                     <h3 id="drinkItemName">Strawberry Smoothie</h3> 
                     <div className="orderingSection">
-                        <button id="strawberrySmoothieAddBtn" onClick={addStrawberrySmoothie}>Add</button>
-                        <button id="strawberrySmoothieRemoveBtn" onClick={removeStrawberrySmoothie}>Remove</button>
-                        <button id="strawberrySmoothieQuantity">Quantity: {strawberrySmoothieNum}</button>
+                        <button className="order-glass add" id="strawberrySmoothieAddBtn" onClick={addStrawberrySmoothie}>Add</button>
+                        <button className="order-glass remove" id="strawberrySmoothieRemoveBtn" onClick={removeStrawberrySmoothie}>Remove</button>
+                        <button className="order-glass quantity" id="strawberrySmoothieQuantity">Quantity: {strawberrySmoothieNum}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
