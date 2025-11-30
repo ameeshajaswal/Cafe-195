@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./config/config.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
@@ -22,8 +24,13 @@ let foodCart = {
   kuyteav: 0
 };
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootEnvPath = path.join(__dirname, "..", ".env");
 
-dotenv.config(); // Load .env variables
+dotenv.config(); // Load server/.env if present
+if (!process.env.MONGO_URI) {
+  dotenv.config({ path: rootEnvPath }); // Fallback to repo root .env
+}
 
 // Connect to MongoDB
 connectDB();
