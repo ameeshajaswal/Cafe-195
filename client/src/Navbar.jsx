@@ -14,7 +14,8 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const isAdminLikePage =
-    location.pathname.startsWith("/admin") || location.pathname.startsWith("/customer");
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/customer");
 
   useEffect(() => {
     const raw = localStorage.getItem("authUser");
