@@ -27,7 +27,7 @@ function Signup() {
     const name = fullName.trim();
 
     try {
-      const data = await apiFetch("/api/users/register", {
+      await apiFetch("/api/users/register", {
         method: "POST",
         body: JSON.stringify({
           name,

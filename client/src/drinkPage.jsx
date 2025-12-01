@@ -5,7 +5,7 @@ import 'primeicons/primeicons.css';
 
         
 
-function drinkPage(){
+function DrinkPage(){
 
     const [icedLatteNum, setIcedLatteNum] = useState(0);
     const [icedChocolateNum, setIcedChocolateNum] = useState(0);
@@ -167,4 +167,4 @@ function drinkPage(){
     )
 }
 
-export default drinkPage;
+export default DrinkPage;
