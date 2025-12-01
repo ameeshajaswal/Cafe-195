@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import 'primeicons/primeicons.css';
 
-function foodPage() {
+function FoodPage() {
 
     const [croissantNum, setCroissantNum] = useState(0);
     const [clubSandwichNum, setClubSandwichNum] = useState(0);
@@ -160,4 +160,4 @@ function foodPage() {
     );
 }
 
-export default foodPage;
+export default FoodPage;

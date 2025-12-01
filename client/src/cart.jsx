@@ -1,6 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { apiFetch } from "./api";
 
+const nameMapDrink = {
+    icedLatte: "Iced Latte",
+    icedChocolate: "Iced Chocolate",
+    icedCappuccino: "Iced Cappuccino",
+    strawberrySmoothie: "Smoothie",
+};
+
+const nameMapFood = {
+    croissant: "Croissant",
+    clubSandwich: "Club Sandwich",
+    spaghetti: "Spaghetti",
+    kuyteav: "Kuyteav",
+};
+
+const drinkPrices = {
+    icedLatte: 4.25,
+    icedChocolate: 4.25,
+    icedCappuccino: 4.25,
+    strawberrySmoothie: 4.25,
+};
+
+const foodPrices = {
+    croissant: 12.25,
+    clubSandwich: 12.25,
+    spaghetti: 12.25,
+    kuyteav: 12.25,
+};
+
 function Cart() {
     const [drinkList, setDrinkList] = useState([]);
     const [foodList, setFoodList] = useState([]);
@@ -98,34 +126,6 @@ function Cart() {
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    const nameMapDrink = {
-        icedLatte: "Iced Latte",
-        icedChocolate: "Iced Chocolate",
-        icedCappuccino: "Iced Cappuccino",
-        strawberrySmoothie: "Smoothie",
-    };
-
-    const nameMapFood = {
-        croissant: "Croissant",
-        clubSandwich: "Club Sandwich",
-        spaghetti: "Spaghetti",
-        kuyteav: "Kuyteav",
-    };
-
-    const drinkPrices = {
-        icedLatte: 4.25,
-        icedChocolate: 4.25,
-        icedCappuccino: 4.25,
-        strawberrySmoothie: 4.25,
-    };
-
-    const foodPrices = {
-        croissant: 12.25,
-        clubSandwich: 12.25,
-        spaghetti: 12.25,
-        kuyteav: 12.25,
     };
 
     useEffect(() => {
