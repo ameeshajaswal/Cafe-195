@@ -1,0 +1,26 @@
+# render.yaml
+services:
+  # Backend Service
+  - type: web
+    name: cafe-195-backend
+    env: node
+    buildCommand: npm install
+    startCommand: cd server && node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+
+  # Frontend Static Site
+  - type: static
+    name: cafe-195-frontend
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://cafe-195-backend.onrender.com
