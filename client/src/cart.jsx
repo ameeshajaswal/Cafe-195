@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiFetch } from "./api";
+import { API_BASE } from "./config";  // Added import
 
 const nameMapDrink = {
     icedLatte: "Iced Latte",
@@ -55,8 +56,8 @@ function Cart() {
     const clearCart = async () => {
         try {
             await Promise.all([
-                fetch("http://localhost:5000/api/drinkCart/reset", { method: "POST" }),
-                fetch("http://localhost:5000/api/foodCart/reset", { method: "POST" })
+                fetch(`${API_BASE}/api/drinkCart/reset`, { method: "POST" }),  // Fixed
+                fetch(`${API_BASE}/api/foodCart/reset`, { method: "POST" })   // Fixed
             ]);
         } catch (err) {
             console.error("Failed to clear cart", err);
@@ -130,7 +131,7 @@ function Cart() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            fetch("http://localhost:5000/api/drinkCart")
+            fetch(`${API_BASE}/api/drinkCart`)  // Fixed
                 .then((res) => res.json())
                 .then((data) => {
                     const arr = Object.entries(data)
@@ -152,7 +153,7 @@ function Cart() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            fetch("http://localhost:5000/api/foodCart")
+            fetch(`${API_BASE}/api/foodCart`)  // Fixed
                 .then((res) => res.json())
                 .then((data) => {
                     const arr = Object.entries(data)

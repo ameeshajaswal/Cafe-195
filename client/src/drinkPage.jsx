@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import 'primeicons/primeicons.css';
+import { API_BASE } from "./config";  // Added import
 
-
-
-        
-
-function DrinkPage(){
-
+function DrinkPage() {
     const [icedLatteNum, setIcedLatteNum] = useState(0);
     const [icedChocolateNum, setIcedChocolateNum] = useState(0);
     const [icedCappuccinoNum, setIcedCappucinoNum] = useState(0);
     const [strawberrySmoothieNum, setstrawberrySmoothieNum] = useState(0);
 
     const syncCart = async () => {
-        const res = await fetch("http://localhost:5000/api/drinkCart");
+        const res = await fetch(`${API_BASE}/api/drinkCart`);  // Fixed
         const data = await res.json();
 
         setIcedLatteNum(data.icedLatte);
@@ -22,11 +18,10 @@ function DrinkPage(){
         setstrawberrySmoothieNum(data.strawberrySmoothie);
     };
 
-    
-    const addIceLatte = async () =>{
+    const addIceLatte = async () => {
         setIcedLatteNum(icedLatteNum + 1);
 
-        await fetch("http://localhost:5000/api/drinkCart/icedLatte/add", {
+        await fetch(`${API_BASE}/api/drinkCart/icedLatte/add`, {  // Fixed
             method: "POST"
         });
 
@@ -34,10 +29,10 @@ function DrinkPage(){
     }
 
     const removeIceLatte = async () => {
-        if(icedLatteNum > 0){
+        if(icedLatteNum > 0) {
             setIcedLatteNum(icedLatteNum - 1);
 
-            await fetch("http://localhost:5000/api/drinkCart/icedLatte/remove", {
+            await fetch(`${API_BASE}/api/drinkCart/icedLatte/remove`, {  // Fixed
                 method: "POST"
             });
 
@@ -48,7 +43,7 @@ function DrinkPage(){
     const addIcedChocolate = async () => {
         setIcedChocolateNum(icedChocolateNum + 1);
 
-        await fetch("http://localhost:5000/api/drinkCart/icedChocolate/add", {
+        await fetch(`${API_BASE}/api/drinkCart/icedChocolate/add`, {  // Fixed
             method: "POST"
         });
 
@@ -59,7 +54,7 @@ function DrinkPage(){
         if (icedChocolateNum > 0) {
             setIcedChocolateNum(icedChocolateNum - 1);
 
-            await fetch("http://localhost:5000/api/drinkCart/icedChocolate/remove", {
+            await fetch(`${API_BASE}/api/drinkCart/icedChocolate/remove`, {  // Fixed
                 method: "POST"
             });
 
@@ -70,7 +65,7 @@ function DrinkPage(){
     const addIcedCappuccino = async () => {
         setIcedCappucinoNum(icedCappuccinoNum + 1);
 
-        await fetch("http://localhost:5000/api/drinkCart/icedCappuccino/add", {
+        await fetch(`${API_BASE}/api/drinkCart/icedCappuccino/add`, {  // Fixed
             method: "POST"
         });
 
@@ -81,7 +76,7 @@ function DrinkPage(){
         if (icedCappuccinoNum > 0) {
             setIcedCappucinoNum(icedCappuccinoNum - 1);
 
-            await fetch("http://localhost:5000/api/drinkCart/icedCappuccino/remove", {
+            await fetch(`${API_BASE}/api/drinkCart/icedCappuccino/remove`, {  // Fixed
                 method: "POST"
             });
 
@@ -92,7 +87,7 @@ function DrinkPage(){
     const addStrawberrySmoothie = async () => {
         setstrawberrySmoothieNum(strawberrySmoothieNum + 1);
 
-        await fetch("http://localhost:5000/api/drinkCart/strawberrySmoothie/add", {
+        await fetch(`${API_BASE}/api/drinkCart/strawberrySmoothie/add`, {  // Fixed
             method: "POST"
         });
 
@@ -103,7 +98,7 @@ function DrinkPage(){
         if (strawberrySmoothieNum > 0) {
             setstrawberrySmoothieNum(strawberrySmoothieNum - 1);
 
-            await fetch("http://localhost:5000/api/drinkCart/strawberrySmoothie/remove", {
+            await fetch(`${API_BASE}/api/drinkCart/strawberrySmoothie/remove`, {  // Fixed
                 method: "POST"
             });
 
@@ -116,7 +111,7 @@ function DrinkPage(){
             <h2>DRINKS</h2>
             <div id="drinksMenu"> 
                 <div className="drinksItem">
-                    <img src="../public/coffee pic 2.png" alt="" />
+                    <img src="/coffee pic 2.png" alt="Iced Latte" />  {/* Fixed image path */}
                     <h3 id="drinkItemName">Iced Latte</h3> 
                     <div className="orderingSection">
                         <button className="order-glass add" id="icedLatteAddBtn" onClick={addIceLatte}>Add</button>
@@ -126,7 +121,7 @@ function DrinkPage(){
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
                 <div className="drinksItem">
-                    <img src="../public/chocolate drink.png" alt="" /> 
+                    <img src="/chocolate drink.png" alt="Iced Chocolate" />  {/* Fixed image path */}
                     <h3 id="drinkItemName">Iced Chocolate</h3> 
                     <div className="orderingSection">
                         <button className="order-glass add" id="icedChocolateAddBtn" onClick={addIcedChocolate}>Add</button>
@@ -136,7 +131,7 @@ function DrinkPage(){
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
                 <div className="drinksItem">
-                    <img src="../public/icedCappuccino.png" alt="" /> 
+                    <img src="/icedCappuccino.png" alt="Iced Cappuccino" />  {/* Fixed image path */}
                     <h3 id="drinkItemName">Iced Cappuccino</h3> 
                     <div className="orderingSection">
                         <button className="order-glass add" id="iceCapuAddBtn" onClick={addIcedCappuccino}>Add</button>
@@ -146,7 +141,7 @@ function DrinkPage(){
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
                 <div className="drinksItem">
-                    <img src="../public/strawberrySmoothie.png" alt="" />
+                    <img src="/strawberrySmoothie.png" alt="Strawberry Smoothie" />  {/* Fixed image path */}
                     <h3 id="drinkItemName">Strawberry Smoothie</h3> 
                     <div className="orderingSection">
                         <button className="order-glass add" id="strawberrySmoothieAddBtn" onClick={addStrawberrySmoothie}>Add</button>
@@ -155,16 +150,9 @@ function DrinkPage(){
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
-
-                
-
-
-
             </div>
-
         </section>
-
-    )
+    );
 }
 
 export default DrinkPage;
