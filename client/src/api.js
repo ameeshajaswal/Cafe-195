@@ -1,8 +1,7 @@
-const API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+import { API_BASE } from './config.js';
 
 export async function apiFetch(path, options = {}) {
-    const url = `${API_BASE_URL}${path}`;
+    const url = `${API_BASE}${path}`;  // Fixed: API_BASE not API_BASE_URL
 
     const defaultHeaders = {
         "Content-Type": "application/json",

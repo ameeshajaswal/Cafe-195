@@ -46,7 +46,7 @@ function LandingPage() {
                 </div>
             )}
             <video autoPlay muted loop id="backgroundVideo">
-                <source src="../public/landingPageVideo.mp4" type="video/mp4" />
+                <source src="/landingPageVideo.mp4" type="video/mp4" />
             </video>
             <Navbar />
             <div id="landPageMainDisplay">
