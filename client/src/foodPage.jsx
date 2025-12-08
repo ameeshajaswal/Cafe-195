@@ -122,7 +122,7 @@ function FoodPage() {
                 </div>
 
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/clubsandwich.jpg" alt="Club Sandwich" />
+                    <img className="foodItemImage" src="/clubSandwich.jpg" alt="Club Sandwich" />
                     <h3 id="drinkItemName">Club Sandwich</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="clubSandwichAddBtn" onClick={addClubSandwich}>Add</button>
@@ -133,7 +133,7 @@ function FoodPage() {
                 </div>
 
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/spaghetti.png" alt="Spaghetti" />
+                    <img className="foodItemImage" src="/Spaghetti.png" alt="Spaghetti" />
                     <h3 id="drinkItemName">Spaghetti</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="spaghettiAddBtn" onClick={addSpaghetti}>Add</button>
