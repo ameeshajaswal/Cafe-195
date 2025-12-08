@@ -214,7 +214,7 @@ function Customer() {
                 <div className="admin-hero-shell">
                     <div className="admin-hero glass-panel">
                         <div className="admin-hero-header">
-                            <span className="admin-kicker">Cafe 195°F</span>
+                            <span className="admin-kicker"><a href="/">🔙</a></span>
                             <h1 className="admin-title">{profile ? `Welcome, ${profile.name}` : "My Dashboard"}</h1>
                             <p className="admin-subtitle">
                                 A glassy, calm space to manage your details and keep tabs on your orders.
