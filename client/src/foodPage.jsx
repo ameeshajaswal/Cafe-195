@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import 'primeicons/primeicons.css';
-import { API_BASE } from "./config";  // Added import
+import { API_BASE } from "./config";
 
 function FoodPage() {
     const [croissantNum, setCroissantNum] = useState(0);
@@ -9,7 +9,7 @@ function FoodPage() {
     const [kuyteavNum, setKuyteavNum] = useState(0);
 
     const syncCart = async () => {
-        const res = await fetch(`${API_BASE}/api/foodCart`);  // Fixed
+        const res = await fetch(`${API_BASE}/api/foodCart`);
         const data = await res.json();
 
         setCroissantNum(data.croissant);
@@ -21,7 +21,7 @@ function FoodPage() {
     const addCroissant = async () => {
         setCroissantNum(croissantNum + 1);
 
-        await fetch(`${API_BASE}/api/foodCart/croissant/add`, {  // Fixed
+        await fetch(`${API_BASE}/api/foodCart/croissant/add`, {
             method: "POST"
         });
 
@@ -32,7 +32,7 @@ function FoodPage() {
         if (croissantNum > 0) {
             setCroissantNum(croissantNum - 1);
 
-            await fetch(`${API_BASE}/api/foodCart/croissant/remove`, {  // Fixed
+            await fetch(`${API_BASE}/api/foodCart/croissant/remove`, {
                 method: "POST"
             });
 
@@ -43,7 +43,7 @@ function FoodPage() {
     const addClubSandwich = async () => {
         setClubSandwichNum(clubSandwichNum + 1);
 
-        await fetch(`${API_BASE}/api/foodCart/clubSandwich/add`, {  // Fixed
+        await fetch(`${API_BASE}/api/foodCart/clubSandwich/add`, {
             method: "POST"
         });
 
@@ -54,7 +54,7 @@ function FoodPage() {
         if (clubSandwichNum > 0) {
             setClubSandwichNum(clubSandwichNum - 1);
 
-            await fetch(`${API_BASE}/api/foodCart/clubSandwich/remove`, {  // Fixed
+            await fetch(`${API_BASE}/api/foodCart/clubSandwich/remove`, {
                 method: "POST"
             });
 
@@ -65,7 +65,7 @@ function FoodPage() {
     const addSpaghetti = async () => {
         setSpaghettiNum(spaghettiNum + 1);
 
-        await fetch(`${API_BASE}/api/foodCart/spaghetti/add`, {  // Fixed
+        await fetch(`${API_BASE}/api/foodCart/spaghetti/add`, {
             method: "POST"
         });
 
@@ -76,7 +76,7 @@ function FoodPage() {
         if (spaghettiNum > 0) {
             setSpaghettiNum(spaghettiNum - 1);
 
-            await fetch(`${API_BASE}/api/foodCart/spaghetti/remove`, {  // Fixed
+            await fetch(`${API_BASE}/api/foodCart/spaghetti/remove`, {
                 method: "POST"
             });
 
@@ -87,7 +87,7 @@ function FoodPage() {
     const addKuyteav = async () => {
         setKuyteavNum(kuyteavNum + 1);
 
-        await fetch(`${API_BASE}/api/foodCart/kuyteav/add`, {  // Fixed
+        await fetch(`${API_BASE}/api/foodCart/kuyteav/add`, {
             method: "POST"
         });
 
@@ -98,7 +98,7 @@ function FoodPage() {
         if (kuyteavNum > 0) {
             setKuyteavNum(kuyteavNum - 1);
 
-            await fetch(`${API_BASE}/api/foodCart/kuyteav/remove`, {  // Fixed
+            await fetch(`${API_BASE}/api/foodCart/kuyteav/remove`, {
                 method: "POST"
             });
 
@@ -111,7 +111,7 @@ function FoodPage() {
             <h2>FOOD</h2>
             <div id="foodMenu">
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/croissant.jpg" alt="Croissant" />  {/* Fixed image path */}
+                    <img className="foodItemImage" src="/croissant.jpg" alt="Croissant" />
                     <h3 id="drinkItemName">Croissant</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="croissantAddBtn" onClick={addCroissant}>Add</button>
@@ -122,7 +122,7 @@ function FoodPage() {
                 </div>
 
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/clubsandwich.jpg" alt="Club Sandwich" />  {/* Fixed image path */}
+                    <img className="foodItemImage" src="/clubsandwich.jpg" alt="Club Sandwich" />
                     <h3 id="drinkItemName">Club Sandwich</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="clubSandwichAddBtn" onClick={addClubSandwich}>Add</button>
@@ -133,7 +133,7 @@ function FoodPage() {
                 </div>
 
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/spaghetti.png" alt="Spaghetti" />  {/* Fixed image path */}
+                    <img className="foodItemImage" src="/spaghetti.png" alt="Spaghetti" />
                     <h3 id="drinkItemName">Spaghetti</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="spaghettiAddBtn" onClick={addSpaghetti}>Add</button>
@@ -144,7 +144,7 @@ function FoodPage() {
                 </div>
 
                 <div className="drinksItem">
-                    <img className="foodItemImage" src="/kuyteav.jpg" alt="Kuyteav" />  {/* Fixed image path */}
+                    <img className="foodItemImage" src="/kuyteav.jpg" alt="Kuyteav" />
                     <h3 id="drinkItemName">Kuyteav</h3>
                     <div className="orderingSection">
                         <button className="order-glass add" id="kuyteavAddBtn" onClick={addKuyteav}>Add</button>
