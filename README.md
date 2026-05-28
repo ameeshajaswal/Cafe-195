@@ -12,15 +12,21 @@ As a portfolio project, Cafe195 highlights practical full-stack development skil
 
 ## Demo / Screenshots
 
-Demo and screenshots will be added soon.
+### Home Page
 
-Suggested screenshots:
+![Cafe195 home page](asset/homepage.png)
 
-- Home / menu page
-- Product ordering workflow
-- Admin dashboard
-- Order management page
-- User/customer dashboard
+### Drink Section
+
+![Cafe195 drink section](asset/drink-section.png)
+
+### Food Section
+
+![Cafe195 food section](asset/food-section.png)
+
+### Signup Page
+
+![Cafe195 signup page](asset/signup-page.png)
 
 ## Features
 
