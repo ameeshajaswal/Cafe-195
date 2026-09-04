@@ -19,7 +19,9 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "User with this email already exists" });
     }
 
-    const user = await User.create({ name, email, password });
+    // Public registration always creates a customer, regardless of extra
+    // properties supplied by the client.
+    const user = await User.create({ name, email, password, role: "customer" });
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -113,44 +115,6 @@ export const getUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Exclude passwords
     res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// One-time admin bootstrap (dev helper)
-export const bootstrapAdmin = async (req, res) => {
-  try {
-    // Block if an admin already exists
-    const adminExists = await User.findOne({ role: "admin" });
-    if (adminExists) {
-      return res.status(400).json({ message: "Admin already exists" });
-    }
-
-    const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Name, email and password are required" });
-    }
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    const user = await User.create({
-      name,
-      email,
-      password,
-      role: "admin"
-    });
-
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role
-    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

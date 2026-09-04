@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { apiFetch } from "./api";
-import { API_BASE } from "./config";  // Added import
 
 const nameMapDrink = {
     icedLatte: "Iced Latte",
@@ -30,12 +29,32 @@ const foodPrices = {
     kuyteav: 12.25,
 };
 
-function Cart() {
-    const [drinkList, setDrinkList] = useState([]);
-    const [foodList, setFoodList] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
+function Cart({ drinkCart, foodCart, resetCart }) {
     const [orderStatus, setOrderStatus] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const drinkList = Object.entries(drinkCart)
+        .filter(([, quantity]) => quantity > 0)
+        .map(([key, quantity]) => ({
+            key,
+            name: nameMapDrink[key] ?? key,
+            quantity,
+            unitPrice: drinkPrices[key] ?? 0,
+            subtotal: (drinkPrices[key] ?? 0) * quantity,
+        }));
+
+    const foodList = Object.entries(foodCart)
+        .filter(([, quantity]) => quantity > 0)
+        .map(([key, quantity]) => ({
+            key,
+            name: nameMapFood[key] ?? key,
+            quantity,
+            unitPrice: foodPrices[key] ?? 0,
+            subtotal: (foodPrices[key] ?? 0) * quantity,
+        }));
+
+    const totalPrice = [...drinkList, ...foodList]
+        .reduce((total, item) => total + item.subtotal, 0);
 
     const isAuthed = () => {
         if (typeof window === "undefined") return false;
@@ -53,20 +72,7 @@ function Cart() {
         }
     };
 
-    const clearCart = async () => {
-        try {
-            await Promise.all([
-                fetch(`${API_BASE}/api/drinkCart/reset`, { method: "POST" }),  // Fixed
-                fetch(`${API_BASE}/api/foodCart/reset`, { method: "POST" })   // Fixed
-            ]);
-        } catch (err) {
-            console.error("Failed to clear cart", err);
-        } finally {
-            setDrinkList([]);
-            setFoodList([]);
-            setTotalPrice(0);
-        }
-    };
+    const clearCart = () => resetCart();
 
     const handleOrderClick = async () => {
         const authed = isAuthed();
@@ -75,42 +81,32 @@ function Cart() {
 
         if (!authed) {
             alert("Please sign up or log in before placing an order.");
-            await clearCart();
+            clearCart();
             return;
         }
 
         if (!hasItems) {
             alert("Add something to your cart before placing an order.");
-            await clearCart();
+            clearCart();
             return;
         }
 
         const authUser = getAuthUser();
         if (!authUser?._id) {
             alert("User session invalid. Please log in again.");
-            await clearCart();
+            clearCart();
             return;
         }
 
-        const totalDrinkPrice = drinkList.reduce((sum, item) => sum + item.subtotal, 0);
-        const totalFoodPrice = foodList.reduce((sum, item) => sum + item.subtotal, 0);
         const payload = {
-            drinkItems: drinkList.map(({ name, quantity, unitPrice, subtotal }) => ({
-                name,
+            drinkItems: drinkList.map(({ key, quantity }) => ({
+                productId: key,
                 quantity,
-                unitPrice,
-                subtotal,
             })),
-            foodItems: foodList.map(({ name, quantity, unitPrice, subtotal }) => ({
-                name,
+            foodItems: foodList.map(({ key, quantity }) => ({
+                productId: key,
                 quantity,
-                unitPrice,
-                subtotal,
             })),
-            total_drink_price: Number(totalDrinkPrice.toFixed(2)),
-            total_food_price: Number(totalFoodPrice.toFixed(2)),
-            total_price: Number((totalDrinkPrice + totalFoodPrice).toFixed(2)),
-            UserID: authUser._id,
         };
 
         try {
@@ -120,7 +116,7 @@ function Cart() {
                 body: JSON.stringify(payload),
             });
             setOrderStatus({ type: "success", text: "Your order has been submitted successfully." });
-            await clearCart();
+            clearCart();
         } catch (err) {
             console.error("Failed to place order", err);
             setOrderStatus({ type: "error", text: err.message || "Failed to place order." });
@@ -128,56 +124,6 @@ function Cart() {
             setIsSubmitting(false);
         }
     };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetch(`${API_BASE}/api/drinkCart`)  // Fixed
-                .then((res) => res.json())
-                .then((data) => {
-                    const arr = Object.entries(data)
-                        .filter(([, qty]) => qty > 0)
-                        .map(([key, qty]) => ({
-                            key,
-                            name: nameMapDrink[key] ?? key,
-                            quantity: qty,
-                            unitPrice: drinkPrices[key] ?? 0,
-                            subtotal: (drinkPrices[key] ?? 0) * qty,
-                        }));
-                    setDrinkList(arr);
-                })
-                .catch((err) => console.error(err));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetch(`${API_BASE}/api/foodCart`)  // Fixed
-                .then((res) => res.json())
-                .then((data) => {
-                    const arr = Object.entries(data)
-                        .filter(([, qty]) => qty > 0)
-                        .map(([key, qty]) => ({
-                            key,
-                            name: nameMapFood[key] ?? key,
-                            quantity: qty,
-                            unitPrice: foodPrices[key] ?? 0,
-                            subtotal: (foodPrices[key] ?? 0) * qty,
-                        }));
-                    setFoodList(arr);
-                })
-                .catch((err) => console.error(err));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        const drinkTotal = drinkList.reduce((acc, item) => acc + item.subtotal, 0);
-        const foodTotal = foodList.reduce((acc, item) => acc + item.subtotal, 0);
-        setTotalPrice(drinkTotal + foodTotal);
-    }, [drinkList, foodList]);
 
     return (
         <section id="cartPage">

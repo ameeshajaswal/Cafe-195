@@ -9,7 +9,7 @@ import {
   updateMyOrder,
   updateOrder
 } from "../controllers/orderController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -21,14 +21,10 @@ router.get("/mine", protect, getMyOrders);
 router.put("/mine/:id", protect, updateMyOrder);
 router.delete("/mine/:id", protect, deleteMyOrder);
 
-// Read orders
-router.get("/", protect, getOrders);
+// Administrative order management
+router.get("/", protect, admin, getOrders);
 router.get("/:id", protect, getOrderById);
-
-// Update an order
-router.put("/:id", protect, updateOrder);
-
-// Delete an order
-router.delete("/:id", protect, deleteOrder);
+router.put("/:id", protect, admin, updateOrder);
+router.delete("/:id", protect, admin, deleteOrder);
 
 export default router;

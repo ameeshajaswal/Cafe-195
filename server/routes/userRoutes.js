@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  bootstrapAdmin,
   deleteUser,
   deleteMe,
   getUserById,
@@ -23,9 +22,6 @@ router.post("/login", loginUser);
 router.get("/me", protect, getMe);
 router.put("/me", protect, updateMe);
 router.delete("/me", protect, deleteMe);
-
-// One-time admin bootstrap (no auth; remove in production)
-router.post("/bootstrap-admin", bootstrapAdmin);
 
 // User CRUD (admin only)
 router.get("/", protect, admin, getUsers);

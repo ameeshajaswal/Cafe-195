@@ -1,110 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import 'primeicons/primeicons.css';
-import { API_BASE } from "./config";  // Added import
 
-function DrinkPage() {
-    const [icedLatteNum, setIcedLatteNum] = useState(0);
-    const [icedChocolateNum, setIcedChocolateNum] = useState(0);
-    const [icedCappuccinoNum, setIcedCappucinoNum] = useState(0);
-    const [strawberrySmoothieNum, setstrawberrySmoothieNum] = useState(0);
-
-    const syncCart = async () => {
-        const res = await fetch(`${API_BASE}/api/drinkCart`);  // Fixed
-        const data = await res.json();
-
-        setIcedLatteNum(data.icedLatte);
-        setIcedChocolateNum(data.icedChocolate);
-        setIcedCappucinoNum(data.icedCappuccino);
-        setstrawberrySmoothieNum(data.strawberrySmoothie);
+function DrinkPage({ cart, changeQuantity }) {
+    const addIceLatte = () => {
+        changeQuantity("icedLatte", 1);
     };
 
-    const addIceLatte = async () => {
-        setIcedLatteNum(icedLatteNum + 1);
+    const removeIceLatte = () => {
+        changeQuantity("icedLatte", -1);
+    };
 
-        await fetch(`${API_BASE}/api/drinkCart/icedLatte/add`, {  // Fixed
-            method: "POST"
-        });
+    const addIcedChocolate = () => {
+        changeQuantity("icedChocolate", 1);
+    };
 
-        syncCart();
-    }
+    const removeIcedChocolate = () => {
+        changeQuantity("icedChocolate", -1);
+    };
 
-    const removeIceLatte = async () => {
-        if(icedLatteNum > 0) {
-            setIcedLatteNum(icedLatteNum - 1);
+    const addIcedCappuccino = () => {
+        changeQuantity("icedCappuccino", 1);
+    };
 
-            await fetch(`${API_BASE}/api/drinkCart/icedLatte/remove`, {  // Fixed
-                method: "POST"
-            });
+    const removeIcedCappuccino = () => {
+        changeQuantity("icedCappuccino", -1);
+    };
 
-            syncCart();
-        }
-    }
+    const addStrawberrySmoothie = () => {
+        changeQuantity("strawberrySmoothie", 1);
+    };
 
-    const addIcedChocolate = async () => {
-        setIcedChocolateNum(icedChocolateNum + 1);
-
-        await fetch(`${API_BASE}/api/drinkCart/icedChocolate/add`, {  // Fixed
-            method: "POST"
-        });
-
-        syncCart();
-    }
-
-    const removeIcedChocolate = async () => {
-        if (icedChocolateNum > 0) {
-            setIcedChocolateNum(icedChocolateNum - 1);
-
-            await fetch(`${API_BASE}/api/drinkCart/icedChocolate/remove`, {  // Fixed
-                method: "POST"
-            });
-
-            syncCart();
-        }
-    }
-
-    const addIcedCappuccino = async () => {
-        setIcedCappucinoNum(icedCappuccinoNum + 1);
-
-        await fetch(`${API_BASE}/api/drinkCart/icedCappuccino/add`, {  // Fixed
-            method: "POST"
-        });
-
-        syncCart();
-    }
-
-    const removeIcedCappuccino = async () => {
-        if (icedCappuccinoNum > 0) {
-            setIcedCappucinoNum(icedCappuccinoNum - 1);
-
-            await fetch(`${API_BASE}/api/drinkCart/icedCappuccino/remove`, {  // Fixed
-                method: "POST"
-            });
-
-            syncCart();
-        }
-    }
-
-    const addStrawberrySmoothie = async () => {
-        setstrawberrySmoothieNum(strawberrySmoothieNum + 1);
-
-        await fetch(`${API_BASE}/api/drinkCart/strawberrySmoothie/add`, {  // Fixed
-            method: "POST"
-        });
-
-        syncCart();
-    }
-
-    const removeStrawberrySmoothie = async () => {
-        if (strawberrySmoothieNum > 0) {
-            setstrawberrySmoothieNum(strawberrySmoothieNum - 1);
-
-            await fetch(`${API_BASE}/api/drinkCart/strawberrySmoothie/remove`, {  // Fixed
-                method: "POST"
-            });
-
-            syncCart();
-        }
-    }
+    const removeStrawberrySmoothie = () => {
+        changeQuantity("strawberrySmoothie", -1);
+    };
 
     return(
         <section id="drinkPage">
@@ -116,7 +44,7 @@ function DrinkPage() {
                     <div className="orderingSection">
                         <button className="order-glass add" id="icedLatteAddBtn" onClick={addIceLatte}>Add</button>
                         <button className="order-glass remove" id="icedLatteRemoveBtn" onClick={removeIceLatte}>Remove</button>
-                        <button className="order-glass quantity" id="icedLatteQuantity">Quantity: {icedLatteNum}</button>
+                        <button className="order-glass quantity" id="icedLatteQuantity">Quantity: {cart.icedLatte}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -126,7 +54,7 @@ function DrinkPage() {
                     <div className="orderingSection">
                         <button className="order-glass add" id="icedChocolateAddBtn" onClick={addIcedChocolate}>Add</button>
                         <button className="order-glass remove" id="icedChocolateRemoveBtn" onClick={removeIcedChocolate}>Remove</button>
-                        <button className="order-glass quantity" id="icedChocolateQuantity">Quantity: {icedChocolateNum}</button>
+                        <button className="order-glass quantity" id="icedChocolateQuantity">Quantity: {cart.icedChocolate}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -136,7 +64,7 @@ function DrinkPage() {
                     <div className="orderingSection">
                         <button className="order-glass add" id="iceCapuAddBtn" onClick={addIcedCappuccino}>Add</button>
                         <button className="order-glass remove" id="iceCapuRemoveBtn" onClick={removeIcedCappuccino}>Remove</button>
-                        <button className="order-glass quantity" id="iceCapuQuantity">Quantity: {icedCappuccinoNum}</button>
+                        <button className="order-glass quantity" id="iceCapuQuantity">Quantity: {cart.icedCappuccino}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>
@@ -146,7 +74,7 @@ function DrinkPage() {
                     <div className="orderingSection">
                         <button className="order-glass add" id="strawberrySmoothieAddBtn" onClick={addStrawberrySmoothie}>Add</button>
                         <button className="order-glass remove" id="strawberrySmoothieRemoveBtn" onClick={removeStrawberrySmoothie}>Remove</button>
-                        <button className="order-glass quantity" id="strawberrySmoothieQuantity">Quantity: {strawberrySmoothieNum}</button>
+                        <button className="order-glass quantity" id="strawberrySmoothieQuantity">Quantity: {cart.strawberrySmoothie}</button>
                     </div>
                     <p>A refreshing iced latte made with 100% Arabica beans, blending smooth espresso and creamy milk for a naturally sweet, chilled coffee experience.</p>
                 </div>

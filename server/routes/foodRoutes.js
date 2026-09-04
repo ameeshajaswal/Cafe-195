@@ -6,12 +6,12 @@ import {
   getFoodById,
   updateFood
 } from "../controllers/foodController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // Create food
-router.post("/", protect, createFood);
+router.post("/", protect, admin, createFood);
 
 // Get all food items
 router.get("/", protect, getFoods);
@@ -20,9 +20,9 @@ router.get("/", protect, getFoods);
 router.get("/:id", protect, getFoodById);
 
 // Update a food item
-router.put("/:id", protect, updateFood);
+router.put("/:id", protect, admin, updateFood);
 
 // Delete a food item
-router.delete("/:id", protect, deleteFood);
+router.delete("/:id", protect, admin, deleteFood);
 
 export default router;

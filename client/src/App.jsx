@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import LandingPage from './landingPage'
@@ -10,33 +10,41 @@ import Signup from './signup'
 import Admin from './Admin'
 import Customer from './Customer'
 
+const INITIAL_DRINK_CART = {
+  icedLatte: 0,
+  icedChocolate: 0,
+  icedCappuccino: 0,
+  strawberrySmoothie: 0,
+}
+
+const INITIAL_FOOD_CART = {
+  croissant: 0,
+  clubSandwich: 0,
+  spaghetti: 0,
+  kuyteav: 0,
+}
+
 function App() {
+  const [drinkCart, setDrinkCart] = useState(INITIAL_DRINK_CART)
+  const [foodCart, setFoodCart] = useState(INITIAL_FOOD_CART)
 
-  // Reset API cart when the user closes or refreshes the website
-  useEffect(() => {
-    const handleUnload = () => {
-      navigator.sendBeacon("http://localhost:5000/api/drinkCart/reset");
-    };
+  const changeQuantity = (setCart, productId, amount) => {
+    setCart((currentCart) => {
+      if (!Object.prototype.hasOwnProperty.call(currentCart, productId)) {
+        return currentCart
+      }
 
-    window.addEventListener("beforeunload", handleUnload);
+      return {
+        ...currentCart,
+        [productId]: Math.max(0, currentCart[productId] + amount),
+      }
+    })
+  }
 
-    return () => {
-      window.removeEventListener("beforeunload", handleUnload);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    const handleUnload = () => {
-      navigator.sendBeacon("http://localhost:5000/api/foodCart/reset");
-    };
-
-    window.addEventListener("beforeunload", handleUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleUnload);
-    };
-  }, []);
+  const resetCart = () => {
+    setDrinkCart({ ...INITIAL_DRINK_CART })
+    setFoodCart({ ...INITIAL_FOOD_CART })
+  }
 
   return (
     <Routes>
@@ -45,9 +53,23 @@ function App() {
         element={
           <>
             <LandingPage />
-            <DrinkPage />
-            <FoodPage />
-            <Cart />
+            <DrinkPage
+              cart={drinkCart}
+              changeQuantity={(productId, amount) =>
+                changeQuantity(setDrinkCart, productId, amount)
+              }
+            />
+            <FoodPage
+              cart={foodCart}
+              changeQuantity={(productId, amount) =>
+                changeQuantity(setFoodCart, productId, amount)
+              }
+            />
+            <Cart
+              drinkCart={drinkCart}
+              foodCart={foodCart}
+              resetCart={resetCart}
+            />
           </>
         }
       />

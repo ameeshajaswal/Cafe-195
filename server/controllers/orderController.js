@@ -1,21 +1,43 @@
 import Order from "../models/order.js";
 import Counter from "../models/counter.js";
+import {
+  calculateOrderPricing,
+  OrderPricingError
+} from "../services/orderPricing.js";
+
+const hasOwn = (value, property) =>
+  Object.prototype.hasOwnProperty.call(value, property);
+
+const selectionFromStoredItems = (items = []) =>
+  items.map(({ productId, quantity }) => ({ productId, quantity }));
+
+const calculateUpdatedPricing = (body, order) => {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    throw new OrderPricingError("Order payload must be an object");
+  }
+
+  return calculateOrderPricing({
+    foodItems: hasOwn(body, "foodItems")
+      ? body.foodItems
+      : selectionFromStoredItems(order.foodItems),
+    drinkItems: hasOwn(body, "drinkItems")
+      ? body.drinkItems
+      : selectionFromStoredItems(order.drinkItems)
+  });
+};
+
+const sendOrderError = (res, error, operation) => {
+  if (error instanceof OrderPricingError) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  return res.status(500).json({ message: `Failed to ${operation} order` });
+};
 
 // Create new order
 export const createOrder = async (req, res) => {
-  const {
-    foodItems = [],
-    drinkItems = [],
-    total_food_price,
-    total_drink_price,
-    total_price,
-    UserID
-  } = req.body;
-
   try {
-    if (!foodItems.length && !drinkItems.length) {
-      return res.status(400).json({ message: "Order must contain at least one item" });
-    }
+    const pricing = calculateOrderPricing(req.body);
 
     const counter = await Counter.findOneAndUpdate(
       { _id: "orderNumber" },
@@ -25,18 +47,14 @@ export const createOrder = async (req, res) => {
     const nextOrderNumber = counter.seq;
 
     const order = await Order.create({
-      foodItems,
-      drinkItems,
-      total_food_price,
-      total_drink_price,
-      total_price,
+      ...pricing,
       orderNumber: nextOrderNumber,
-      UserID
+      UserID: req.user._id
     });
 
     res.status(201).json(order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return sendOrderError(res, error, "create");
   }
 };
 
@@ -66,6 +84,10 @@ export const getOrderById = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (!order) return res.status(404).json({ message: "Order not found" });
+    const isOwner = order.UserID.toString() === req.user._id.toString();
+    if (req.user.role !== "admin" && !isOwner) {
+      return res.status(404).json({ message: "Order not found" });
+    }
 
     res.json(order);
   } catch (error) {
@@ -80,18 +102,18 @@ export const updateOrder = async (req, res) => {
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    order.foodItems = req.body.foodItems ?? order.foodItems;
-    order.drinkItems = req.body.drinkItems ?? order.drinkItems;
-    order.total_food_price = req.body.total_food_price ?? order.total_food_price;
-    order.total_drink_price =
-      req.body.total_drink_price ?? order.total_drink_price;
-    order.total_price = req.body.total_price ?? order.total_price;
+    const pricing = calculateUpdatedPricing(req.body, order);
+    order.foodItems = pricing.foodItems;
+    order.drinkItems = pricing.drinkItems;
+    order.total_food_price = pricing.total_food_price;
+    order.total_drink_price = pricing.total_drink_price;
+    order.total_price = pricing.total_price;
     order.UserID = req.body.UserID ?? order.UserID;
 
     const updatedOrder = await order.save();
     res.json(updatedOrder);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return sendOrderError(res, error, "update");
   }
 };
 
@@ -105,17 +127,17 @@ export const updateMyOrder = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to update this order" });
     }
 
-    order.foodItems = req.body.foodItems ?? order.foodItems;
-    order.drinkItems = req.body.drinkItems ?? order.drinkItems;
-    order.total_food_price = req.body.total_food_price ?? order.total_food_price;
-    order.total_drink_price =
-      req.body.total_drink_price ?? order.total_drink_price;
-    order.total_price = req.body.total_price ?? order.total_price;
+    const pricing = calculateUpdatedPricing(req.body, order);
+    order.foodItems = pricing.foodItems;
+    order.drinkItems = pricing.drinkItems;
+    order.total_food_price = pricing.total_food_price;
+    order.total_drink_price = pricing.total_drink_price;
+    order.total_price = pricing.total_price;
 
     const updatedOrder = await order.save();
     res.json(updatedOrder);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return sendOrderError(res, error, "update");
   }
 };
 

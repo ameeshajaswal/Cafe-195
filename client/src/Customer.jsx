@@ -143,13 +143,11 @@ function Customer() {
         const edit = orderEdits[orderId];
         if (!edit) return;
 
-        const cleanList = (items) => items.filter((i) => i.quantity > 0);
+        const cleanList = (items) => items
+            .filter((i) => i.quantity > 0)
+            .map(({ productId, quantity }) => ({ productId, quantity }));
         const drinkItems = cleanList(edit.drinkItems || []);
         const foodItems = cleanList(edit.foodItems || []);
-        const sum = (arr) => arr.reduce((acc, item) => acc + (item.subtotal || 0), 0);
-        const total_drink_price = sum(drinkItems);
-        const total_food_price = sum(foodItems);
-        const total_price = total_drink_price + total_food_price;
 
         try {
             const updated = await apiFetch(`/api/orders/mine/${orderId}`, {
@@ -157,9 +155,6 @@ function Customer() {
                 body: JSON.stringify({
                     drinkItems,
                     foodItems,
-                    total_drink_price,
-                    total_food_price,
-                    total_price,
                 }),
             });
             setOrders((prev) => prev.map((o) => (o._id === orderId ? updated : o)));

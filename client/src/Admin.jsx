@@ -112,13 +112,11 @@ function Admin() {
     async function saveOrderEdit(orderId) {
         const edit = orderEdits;
         if (!edit) return;
-        const clean = (items) => (items || []).filter((i) => i.quantity > 0);
+        const clean = (items) => (items || [])
+            .filter((i) => i.quantity > 0)
+            .map(({ productId, quantity }) => ({ productId, quantity }));
         const drinkItems = clean(edit.drinkItems);
         const foodItems = clean(edit.foodItems);
-        const sum = (arr) => arr.reduce((acc, item) => acc + (item.subtotal || 0), 0);
-        const total_drink_price = sum(drinkItems);
-        const total_food_price = sum(foodItems);
-        const total_price = total_drink_price + total_food_price;
 
         setSaving(true);
         setActionError("");
@@ -128,9 +126,6 @@ function Admin() {
                 body: JSON.stringify({
                     drinkItems,
                     foodItems,
-                    total_drink_price,
-                    total_food_price,
-                    total_price,
                 }),
             });
             setOrders((prev) => prev.map((o) => (o._id === orderId ? updated : o)));

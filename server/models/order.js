@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const lineItemSchema = new mongoose.Schema(
   {
+    productId: { type: String, required: true },
     name: { type: String, required: true },
     quantity: { type: Number, required: true },
     unitPrice: { type: Number, required: true },

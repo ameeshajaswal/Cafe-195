@@ -6,12 +6,12 @@ import {
   getDrinkById,
   updateDrink
 } from "../controllers/drinkController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // Create drink
-router.post("/", protect, createDrink);
+router.post("/", protect, admin, createDrink);
 
 // Get all drinks
 router.get("/", protect, getDrinks);
@@ -20,9 +20,9 @@ router.get("/", protect, getDrinks);
 router.get("/:id", protect, getDrinkById);
 
 // Update a drink
-router.put("/:id", protect, updateDrink);
+router.put("/:id", protect, admin, updateDrink);
 
 // Delete a drink
-router.delete("/:id", protect, deleteDrink);
+router.delete("/:id", protect, admin, deleteDrink);
 
 export default router;

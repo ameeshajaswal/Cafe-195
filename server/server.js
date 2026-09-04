@@ -14,19 +14,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, "..", ".env"), quiet: true });
 
 // Connect to MongoDB
 connectDB();
 
 const app = express();
 
-// CORS configuration - allow Render frontend and local dev
+// CORS configuration - allow the deployed frontend and local development
 const allowedOrigins = [
-  'https://cafe-195-frontend.onrender.com',
+  process.env.CLIENT_URL,
   'http://localhost:5173',
   'http://localhost:3000'
-];
+].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -148,35 +148,13 @@ app.post("/api/foodCart/:item/:action", (req, res) => {
 
 // Health check for Render
 app.get("/api/health", (req, res) => {
-  res.json({ 
-    status: "healthy",
-    message: "Coffee Café API is running",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development"
-  });
+  res.json({ status: "healthy" });
 });
 
 // Root endpoint
 app.get("/", (req, res) => {
   res.send("Coffee Café API is running..");
 });
-
-// For production - serve frontend files
-// IMPORTANT: Path is different because server is in subdirectory
-if (process.env.NODE_ENV === 'production') {
-  // Calculate correct path: go up one level from server/, then into client/dist
-  const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
-  
-  console.log(`Serving static files from: ${clientDistPath}`);
-  
-  // Serve static files from client/dist
-  app.use(express.static(clientDistPath));
-  
-  // Handle SPA routing - all other routes go to index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientDistPath, 'index.html'));
-  });
-}
 
 // Start server
 const PORT = process.env.PORT || 5000;
