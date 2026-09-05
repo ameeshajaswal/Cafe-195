@@ -13,11 +13,8 @@ import drinkRoutes from "./routes/drinkRoute.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables
+// Optional local environment file; existing platform variables take precedence.
 dotenv.config({ path: path.join(__dirname, "..", ".env"), quiet: true });
-
-// Connect to MongoDB
-connectDB();
 
 const app = express();
 
@@ -45,10 +42,21 @@ app.use(cors({
 app.use(express.json());
 
 // API Routes
-app.use("/api/users", userRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/foods", foodRoutes);
-app.use("/api/drinks", drinkRoutes);
+const requireDatabase = async (_req, res, next) => {
+  try {
+    await connectDB();
+  } catch {
+    // Keep the runtime available for health checks and connection retries.
+    console.error("❌ MongoDB connection unavailable");
+    return res.status(503).json({ message: "Database temporarily unavailable" });
+  }
+  next();
+};
+
+app.use("/api/users", requireDatabase, userRoutes);
+app.use("/api/orders", requireDatabase, orderRoutes);
+app.use("/api/foods", requireDatabase, foodRoutes);
+app.use("/api/drinks", requireDatabase, drinkRoutes);
 
 // ---------------------- CART ROUTES ----------------------
 // In-memory carts
@@ -146,7 +154,7 @@ app.post("/api/foodCart/:item/:action", (req, res) => {
   res.json(foodCart);
 });
 
-// Health check for Render
+// Public liveness check; intentionally independent of database availability.
 app.get("/api/health", (req, res) => {
   res.json({ status: "healthy" });
 });
@@ -156,7 +164,17 @@ app.get("/", (req, res) => {
   res.send("Coffee Café API is running..");
 });
 
-// Start server
+// Local startup fails fast. Vercel connects inside database-backed requests.
+if (!process.env.VERCEL) {
+  try {
+    await connectDB();
+  } catch {
+    console.error("❌ MongoDB connection failed; check MONGO_URI and database access");
+    process.exit(1);
+  }
+}
+
+// Vercel natively supports this listener, as does the existing local npm command.
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
